@@ -1,0 +1,26 @@
+.form{
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
+.item {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+.item input {
+  width: 600px;
+  background-color: #E1E1E1;
+  border: none;
+}
+.btn{
+  height: 40px;
+  width: 180px;
+  background-color: #33B4EE;
+  border: none;
+  color: #fff;
+  font-weight: 400;
+  font-size: 20px;
+  margin-left: 79%;
+}

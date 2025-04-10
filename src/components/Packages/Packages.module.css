@@ -1,0 +1,46 @@
+.wrapperPackage {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px 5px 5px 5px;
+}
+.wrapperPackage h2{
+  text-align: left;
+  font-weight: 400;
+  font-size: 32px;
+}
+
+.card {
+  display: flex;
+  max-width: 960px;
+  max-height: 130px;
+  background-color: #E1E1E1;
+  padding: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.description{
+  text-align: left;
+}
+
+.description .title {
+  font-weight: 400;
+  font-size: 24px;
+  text-align: left;
+  margin-bottom: 10px;
+  color: #0779BF;
+}
+
+.price{
+  display: flex;
+  border-left: 1px solid #fff;
+  align-items: center;
+  font-weight: 400;
+  font-size: 24px;
+  color: #0779BF;
+}
+.item{
+  font-weight: 400;
+  font-size: 20px;
+  text-align: left;
+}

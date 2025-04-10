@@ -1,0 +1,65 @@
+.navTop {
+  height: 92px; 
+  background-color: #003C78; 
+  color: #fff
+}
+
+.navInner {
+  width: 1200px; 
+  height: 92px; 
+  margin: 0 auto; 
+  display: flex; 
+  gap: 50px; 
+  align-items: center 
+}
+
+.navInner div {
+  flex-grow: 1;
+}
+
+.navInner input {
+  width: 100%; 
+  height: 35px
+}
+
+.icon {
+  position: absolute; 
+  color: #000; 
+  top: 35px;
+  right: 400px
+}
+
+.navBottom {
+  width: 1200px; 
+  height: 110px;
+  margin: 0 auto ;
+  display: flex ;
+  justify-content: space-between ;
+  align-items: center ;
+}
+.navBottom h2 {
+  color: #003C78; 
+  font-style: italic; 
+  font-weight: 700; 
+  font-size: 32px
+}
+
+.navSupport {
+  display: flex; 
+  align-items: center; 
+  gap: 20px
+}
+
+.navSupport p {
+  width: 230px; 
+  text-align: right; 
+  font-weight: 500; 
+  font-size: 15px; 
+  color: #003C78
+}
+
+.navSupport h3 {
+  color: #003C78; 
+  font-weight: 800; 
+  font-size: 48px
+}
