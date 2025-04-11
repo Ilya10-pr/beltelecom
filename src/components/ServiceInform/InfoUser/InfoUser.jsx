@@ -1,7 +1,9 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import style from "./Record.module.css"
+import { useNavigate } from 'react-router-dom';
 const Record = () => {
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -11,7 +13,8 @@ const Record = () => {
 
   const sendData = (data) => {
     console.log('Отправленные данные:', data);
-    reset(); 
+    reset();
+    navigate("service/ticket")
   };
   return (
     <div className={style.form}>

@@ -4,21 +4,26 @@ import PackagesContainer from './components/Packages/PackagesContainer';
 import SectionLinks from './components/SectionLinks/SectionLinks';
 import { Routes, Route, useParams, useLocation } from 'react-router-dom';
 import Operation from './components/ServiceInform/Operation/Operation';
-import Record from './components/ServiceInform/Record/Record';
-import { itemLink } from './helpers/itemLink';
-import ServiceInform from './components/ServiceInform/ServiceInform';
+import Record from './components/ServiceInform/InfoUser/InfoUser';
+import { services } from './helpers/itemLink';
+import Timetable from './components/ServiceInform/Timetable/Timetable';
+import Ticket from "./components/ServiceInform/Ticket/Ticket"
+import NavStepper from './components/ServiceInform/NavStepper';
 
 const App = () => {
   const url = useLocation()
-
+  const path = url.pathname.split("/")[2]
+  console.log(path)
   return (
         <div className="App">
               <LayoutTop />
-              <SectionLinks value={itemLink} /> 
+              {url.pathname.includes("service")? <NavStepper /> : <SectionLinks />}
           <Routes>
-              <Route path="/package" element={<PackagesContainer />  } />
-              <Route path="/operation" element={<Operation /> } />   
-              <Route path="/record" element={<Record /> } />
+              <Route path={"/home/" + path} element={<PackagesContainer service={services[path]} />  } />
+              <Route path="/service/operation" element={<Operation /> } />
+              <Route path="/service/date" element={<Timetable /> } />
+              <Route path="/service/info" element={<Record /> } />
+              <Route path="/service/ticket" element={<Ticket /> } />
           </Routes>
         </div>
     

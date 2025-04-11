@@ -1,33 +1,31 @@
 import React from 'react'
-import { descriptionServices, itemLinkServices } from '../../helpers/itemLink';
 import style from "./Packages.module.css"
-import { useNavigate, useParams } from 'react-router-dom';
-import SectionLinks from '../SectionLinks/SectionLinks';
+import { Link } from 'react-router-dom';
+import PopupChannels from './PopupChannels/PopupChannels';
 
-const Packages = () => {
-  const navigate = useNavigate()
+const Packages = ({service}) => {
 
-  const select = () => {
-    navigate("/operation")
+
+  if(!service){
+    return <div>На этапе разработки</div>
   }
+
   return (
-    <button onClick={() => select()}>
-      <div className={style.card}>
+    <div className={style.card}>
         <div className={style.description}>
+        <Link to={"/service/operation"}>
           <div className={style.title}>ЯСНА 500</div>
-        {descriptionServices.package.map((value)=> (
+          </Link>
+        {service.map((value)=> (
           <div key={value + Date.now()} className={style.item}>{value}</div>
         ))}
+        <PopupChannels />
         </div>
         <div className={style.price}>
             64.70 р./мес. 
         </div>
       </div>
-    </button>
-
-    
-    
   )
 };
 
-export default Packages
+export default Packages;
