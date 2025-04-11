@@ -1,0 +1,27 @@
+.wrapperTicket {
+  max-width: 470px;
+  max-height: 660px;
+  margin: 30px auto;
+}
+
+.innerTicket {
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  background-color: #E1E1E1;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #fff;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.title{
+  margin-bottom: 15px;
+  font-size: 32px;
+}
+.item span{
+  font-size: 20px;
+}

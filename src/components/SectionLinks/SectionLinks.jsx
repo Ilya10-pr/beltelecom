@@ -2,12 +2,22 @@ import React from 'react'
 import CustomLink from '../CustomComponents/CustomLink';
 import style from "./SectionLinks.module.css"
 
-const SectionLinks = ({value}) => {
+const homeStepper = [
+  {path: "package", name: "Пакеты"},
+  {path: "internet", name: "Интернет"},
+  {path: "tv", name: "Телевидение"},
+  {path: "smart", name: "Умный дом"},
+  {path: "phone", name: "Телефон"},
+  {path: "hosting", name: "Хостинг"},
+  {path: "observe", name: "Видеоконтроль"}
+]
+
+const SectionLinks = () => {
   return (
     <div className={style.wrapperLinks}>
         <div>
-        {Object.keys(value).map((link) => (
-          <CustomLink key={link + Date.now()} link={link} item={value[link]} />
+        {homeStepper.map((step) => (
+          <CustomLink key={step.path} link={"home/" + step.path} item={step.name} />
         ))}
         </div>
       </div>

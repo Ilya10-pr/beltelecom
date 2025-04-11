@@ -6,7 +6,7 @@ const Operation = () => {
   const navigate = useNavigate();
 
   const selectOperation = () => {
-    navigate("/record")
+    navigate("/service/date")
   }
   return (
     <div className={style.operation}>
