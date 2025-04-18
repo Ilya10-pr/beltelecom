@@ -1,0 +1,10 @@
+.add, .delete{
+  padding: 30px 5px 5px 5px;
+  text-align: left;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.add p, .delete p {
+  display: inline;
+  font-weight: 600;
+}

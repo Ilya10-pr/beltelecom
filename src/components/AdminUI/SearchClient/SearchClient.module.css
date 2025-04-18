@@ -1,0 +1,48 @@
+.form{
+  max-width: 940px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 5px 5px 5px;
+  text-align: left;
+}
+.form form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 940px;
+  height: 450px;
+  padding: 5px;
+  background-color: #D9D9D9;
+
+}
+.innerForm  {
+  max-width: 740px;
+  padding: 10px;
+  background-color: #D9D9D9;
+}
+.title{
+  margin-bottom: 35px;
+  font-weight: 600;
+}
+.item {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+.item input {
+  width: 350px;
+  border: none;
+}
+
+.item label {
+  font-weight: 400;
+}
+.btn{
+  padding: 5px 30px 5px 30px;
+  background-color: #33B4EE;
+  border: none;
+  color: #fff;
+  font-weight: 400;
+  font-size: 20px;
+}
