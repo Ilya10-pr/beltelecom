@@ -1,20 +1,23 @@
 import React from 'react'
-import CustomLink from '../CustomComponents/CustomLink';
+import CustomLink from '../CustomComponents/CustomSectionLinks';
 import { FaPhone } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
 import style from "./LayoutTop.module.css";
+import { Link } from 'react-router-dom';
 
 const LayoutTop = () => {
+  const isAdmin = true
   return (
     <>
       <div className={style.navTop}>
         <div className={style.navInner}>
-          <CustomLink link={"about"} item={"О компании"}/>
+          <Link to="about">О компании</Link>
           <div>
             <input />
             <IoSearch className={style.icon} />
           </div>
-          <CustomLink link={"home"} item={"На главную"}/>
+          {!isAdmin ? <Link to="home" >На главную</Link> : <Link to="login" >Войти</Link>}
+          
         </div>
       </div>
       <div className={style.navBottom}>

@@ -1,0 +1,59 @@
+.wrapperOperations {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 5px 5px 5px;
+  font-size: 20px;
+}
+.wrapperOperations button {
+  width: 300px;
+  margin-bottom: 30px;
+  font-size: 24px;
+}
+.item{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.item p{
+  flex-grow: 1;
+  height: 20px;
+  background-color: #fff;
+  padding: 5px;
+}
+.inform {
+  display: grid;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #EBEBEB;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.table {
+	width: 100%;
+	margin-bottom: 20px;
+	border-collapse: collapse; 
+  background-color: #EBEBEB;
+}
+.table th {
+	font-weight: bold;
+	padding: 5px;
+	border: 1px solid #dddddd;
+  max-width: 300px;
+  word-break: break-all; 
+}
+.table td {
+	border: 1px solid #dddddd;
+	padding: 10px;
+  max-width: 300px;
+  word-break: break-all; 
+}
+.table tr td:first-child, .table tr th:first-child {
+	border-left: none;
+}
+.table tr td:last-child, .table tr th:last-child {
+	border-right: none;
+}

@@ -14,7 +14,7 @@ const Record = () => {
   const sendData = (data) => {
     console.log('Отправленные данные:', data);
     reset();
-    navigate("service/ticket")
+    navigate("/service/ticket")
   };
   return (
     <div className={style.form}>

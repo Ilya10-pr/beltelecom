@@ -6,8 +6,7 @@
 }
 .wrapperPackage h2{
   text-align: left;
-  font-weight: 400;
-  font-size: 32px;
+  font-size: 30px;
 }
 
 .card {
@@ -24,8 +23,6 @@
 }
 
 .description .title {
-  font-weight: 400;
-  font-size: 24px;
   text-align: left;
   margin-bottom: 10px;
   color: #0779BF;
@@ -38,7 +35,6 @@
   background-color: transparent;
   border: 1px solid #000;
   transition: transform 0.1s;
-  font-size: 20px;
 }
 .description button:hover{
   transform: scale(1.01);
@@ -48,19 +44,20 @@
   display: flex;
   border-left: 1px solid #fff;
   align-items: center;
-  font-weight: 400;
-  font-size: 24px;
   color: #0779BF;
 }
 .item{
   margin-bottom: 5px;
-  font-size: 20px;
   text-align: left;
 }
 
 .popupContainer {
   position: relative;
   display: inline-block;
+}
+
+.popupContainer button{
+  color: #000;
 }
 
 .popup {
