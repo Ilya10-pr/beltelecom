@@ -3,21 +3,28 @@ import CustomLink from '../CustomComponents/CustomSectionLinks';
 import { FaPhone } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
 import style from "./LayoutTop.module.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LayoutTop = () => {
-  const isAdmin = true
+  const navigate = useNavigate()
+  const isAdmin = window.localStorage.getItem("token");
+  const IP = true
+
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/login");
+  }
   return (
     <>
       <div className={style.navTop}>
         <div className={style.navInner}>
           <Link to="about">О компании</Link>
           <div>
-            <input />
-            <IoSearch className={style.icon} />
+            <input placeholder='Поиск' />
+            {/* <IoSearch className={style.icon} /> */}
           </div>
-          {!isAdmin ? <Link to="home" >На главную</Link> : <Link to="login" >Войти</Link>}
-          
+          <Link to="home" >На главную</Link>
+          {IP ? (isAdmin ? <button onClick={() => logOut()} >Выйти</button> : <Link to="login" >Админ панель</Link> ) : null  }
         </div>
       </div>
       <div className={style.navBottom}>

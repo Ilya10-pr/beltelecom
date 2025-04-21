@@ -1,0 +1,128 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalWindow {
+  background: #DDDDDD;
+  max-width: 1000px;
+  width: 80%;
+  padding: 30px 5px;
+  max-height: 80vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+
+form {
+  margin: 0 auto;
+  max-width: 700px;
+  padding: 10px;
+}
+
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+
+.item input[type="file"] {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
+  
+}
+
+.item input[type="text"],
+.item input[type="date"],
+.item input[type="file"],
+.item textarea {
+  width: 400px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.dropdownContent {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  z-index: 1;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdownItem {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background-color: #f1f1f1;
+}
+
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.selectFile{
+  padding: 5px 18px;
+  background-color: #33B4EE;
+  cursor: pointer;
+}
+
+.cancel {
+  padding: 4px 8px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.submit {
+  padding: 4px 8px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.error {
+  border-color: #f44336 !important;
+}
+
+.message {
+  color: #f44336;
+  font-size: 12px;
+}

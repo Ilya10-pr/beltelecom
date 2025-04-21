@@ -8,3 +8,13 @@
   display: inline;
   font-weight: 600;
 }
+
+.wrapperBtn {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 5px 5px 5px;
+  align-items: center;
+}

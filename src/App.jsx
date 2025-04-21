@@ -13,20 +13,25 @@ import AddService from './components/AdminUI/AddService/AddService';
 import DeleteService from './components/AdminUI/DeleteService/DeleteService';
 import SearchClient from './components/AdminUI/SearchClient/SearchClient';
 import OperationsClient from './components/AdminUI/SearchClient/OperationsClient/OperationsClient';
+import { useQuery } from '@tanstack/react-query';
+import { getAuthMe, getServices } from './api/api';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { logInAdmin } from './store/user/slice';
 // TODO:  // edit font-size and edit width input in navbar
 
 const App = () => {
   const isAdmin = false;
   const url = useLocation()
   const path = url.pathname.split("/")[2]
-  console.log(path)
   return (
         <div className="App">
               <LayoutTop />
               {url.pathname.includes("service") 
                               ? <CustomSectionLinks prefix={"/service/"} links={serviceLinks}/> 
+                              : url.pathname.includes("admin") ? <CustomSectionLinks prefix={"/admin/"} links={adminLinks}/>
                               : <CustomSectionLinks prefix={"/home/"} links={homeLinks}/>}
-              <CustomSectionLinks prefix={"/admin/"} links={adminLinks}/>
+              
           <Routes>
               <Route path={"/home/" + path} element={<PackagesContainer service={services[path]} />  } />
               <Route path="/service/operation" element={<Operation /> } />

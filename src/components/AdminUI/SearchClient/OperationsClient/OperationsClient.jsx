@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from "./OperationsClient.module.css";
+import AddDocument from './AddDocument/AddDocument';
 export const informClients = [{name: "Прибыльский Илья Витальевич", phone: "1234567", passport: "12343214321",
                           numClient: "1234567", document: "паспорт", copy: "паспорт.pdf", numberApp: "123456789", 
                           description: "Пакет услуг ЯСНО 500", date: "02/03/2023"},
@@ -9,6 +10,8 @@ export const informClients = [{name: "Прибыльский Илья Витал
 
 
 const OperationsClient = () => {
+    const [isOpen, setIsOpen] = useState(false);
+  
   return (
     <div className={style.wrapperOperations}>
         <div className={style.inform}>
@@ -29,7 +32,7 @@ const OperationsClient = () => {
             <p>{informClients[0].numClient}</p>
           </div>
         </div>
-        <button>Добавить документ</button>
+        <button className={style.add} onClick={() => setIsOpen(true)}>Добавить документ</button>
         <div>
           <table className={style.table}>
             <thead>
@@ -54,6 +57,7 @@ const OperationsClient = () => {
             </tbody>
           </table>
         </div>
+        {isOpen && <AddDocument setIsOpen={setIsOpen} /> }
     </div>
   )
 };

@@ -4,10 +4,14 @@
   padding: 30px 5px 5px 5px;
   font-size: 20px;
 }
-.wrapperOperations button {
-  width: 300px;
-  margin-bottom: 30px;
+.wrapperOperations .add {
+  padding: 8px 16px;
+  height: 65px;
   font-size: 24px;
+  margin-bottom: 30px;
+  background-color: #33B4EE;
+  color: #fff;
+  border: none;
 }
 .item{
   display: flex;
