@@ -3,26 +3,20 @@ import style from "./Packages.module.css"
 import { Link } from 'react-router-dom';
 import PopupChannels from './PopupChannels/PopupChannels';
 
-const Packages = ({service}) => {
+const Packages = ({name, price, description}) => {
 
-
-  if(!service){
-    return <div>На этапе разработки</div>
-  }
 
   return (
     <div className={style.card}>
         <div className={style.description}>
         <Link to={"/service/operation"}>
-          <div className={style.title}>ЯСНА 500</div>
+          <div className={style.title}>{name}</div>
           </Link>
-        {service.map((value)=> (
-          <div key={value + Date.now()} className={style.item}>{value}</div>
-        ))}
+            <div  className={style.item}>{description}</div>
         <PopupChannels />
         </div>
         <div className={style.price}>
-            64.70 р./мес. 
+            {price} р./мес. 
         </div>
       </div>
   )

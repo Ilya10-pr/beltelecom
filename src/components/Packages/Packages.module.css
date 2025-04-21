@@ -12,11 +12,11 @@
 .card {
   display: flex;
   max-width: 960px;
-  max-height: 130px;
   background-color: #E1E1E1;
   padding: 10px;
   margin-bottom: 20px;
   cursor: pointer;
+  justify-content: space-between;
 }
 .description{
   text-align: left;
@@ -45,6 +45,7 @@
   border-left: 1px solid #fff;
   align-items: center;
   color: #0779BF;
+  padding: 10px;
 }
 .item{
   margin-bottom: 5px;

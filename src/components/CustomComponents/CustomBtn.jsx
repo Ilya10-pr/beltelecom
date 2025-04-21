@@ -1,12 +1,8 @@
 import React from 'react'
 import style from "./CustomElements.module.css"
-const CustomBtn = ({handleClick, services}) => {
+const CustomBtn = ({handleClick, text}) => {
   return (
-    <div className={style.wrapperBtn}>
-      {services.map((text) => (
-        <button key={text} onClick={handleClick}>{text}</button>
-      ))}
-    </div>
+        <button className={style.customBtn} onClick={handleClick}>{text}</button>
   )
 };
 
