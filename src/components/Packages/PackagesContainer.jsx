@@ -4,35 +4,40 @@ import Packages from './Packages';
 import { packages } from '../../helpers/itemLink';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getAllPackages, getAllServices } from '../../api/api';
+import { getAllServices } from '../../api/api';
 
 const PackagesContainer = () => {
-  const [services, setServices] = useState([])
   const url = useLocation()
   const path = url.pathname.split("/")[2]
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["service", path],
+    queryFn: () => getAllServices(path === "package" ? "package" : "service")
+  });
 
-  useEffect(() =>{
-    try {
-      if(path === "package"){
-        getAllPackages().then(data => setServices(data)).catch((error) =>console.log(error))
-        return
-      } else {
-        getAllServices().then(data => setServices(data)).catch((error) =>console.log(error))
-      }  
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
-
-  if(!services) {
-    return <div> Не найдено</div>
+  if (isLoading) {
+    return <div>Загрузка...</div>;
   }
-  const items = services.filter((item) => item.category === path)
+
+  if (isError) {
+    console.error("Ошибка при загрузке данных:", error);
+    return <div>Ошибка при загрузке данных</div>;
+  }
+
+  // Если данные загружены, но пустые
+  if (!data || data.length === 0) {
+    return <div>Данные не найдены</div>;
+  }
+
 
   return (
     <div className={style.wrapperPackage}>
-        {services.filter((item) => item.category === path).map((item) => (
-          <Packages name={item.name} price={item.price} description={item.description} key={item.id} />
+        {data.filter((item) => item.category === path).map((item) => (
+          <Packages 
+              id={item.id} 
+              name={item.name} 
+              price={item.price} 
+              description={item.description} 
+              key={item.id} />
         ))}
     </div>
   )

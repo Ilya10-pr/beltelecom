@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import style from './AddDocument.module.css'; // Создадим этот файл
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { updateInfoUser } from '../../../../../api/api';
+import { setDataClient } from '../../../../../store/client/client';
 
-const AddDocument = ({setIsOpen}) => {
+const AddDocument = ({passport, client, setIsOpen}) => {
   const [showCategories, setShowCategories] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const dispatch = useDispatch()
   const categories = ["Договор",
     "Приложение",
     "Свидетельство о льготе",
@@ -26,12 +29,13 @@ const AddDocument = ({setIsOpen}) => {
 
   const documentType = watch("documentType");
 
-  const onSubmit = (data) => {
-    const formData = {
-      ...data,
-      file: selectedFile
-    };
-    console.log(formData);
+  const onSubmit = async (data) => {
+    data.passport = passport
+    const dataDocument = new FormData();
+    dataDocument.append("file", selectedFile);
+    dataDocument.append("data", JSON.stringify(data))
+    const response = await updateInfoUser(client.id, dataDocument).catch((error) => console.log(error))
+    dispatch(setDataClient(response))
     setIsOpen(false);
     resetForm();
   };
@@ -40,11 +44,7 @@ const AddDocument = ({setIsOpen}) => {
     reset();
     setSelectedFile(null);
   };
-
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
-
+ 
   return (
         <div className={style.modalOverlay} onClick={() => setIsOpen(false)}>
           <div className={style.modalWindow} onClick={e => e.stopPropagation()}>
@@ -84,16 +84,6 @@ const AddDocument = ({setIsOpen}) => {
               </div>
 
               <div className={style.item}>
-                <label>Название</label>
-                <input
-                  type="text"
-                  {...register("title", { 
-                    required: true
-                  })}
-                  className={errors.title ? style.error : ''}
-                />
-              </div>
-              <div className={style.item}>
                 <label>Описание</label>
                 <textarea
                   {...register("description")}
@@ -110,7 +100,7 @@ const AddDocument = ({setIsOpen}) => {
                 <label>
                   <input
                     type="file"
-                    onChange={handleFileChange}
+                    onChange={(e) => setSelectedFile(e.target.files[0])}
                     required
                     className={!selectedFile ? style.error : ''}
                   />

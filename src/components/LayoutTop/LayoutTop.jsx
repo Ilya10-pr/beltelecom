@@ -18,13 +18,14 @@ const LayoutTop = () => {
     <>
       <div className={style.navTop}>
         <div className={style.navInner}>
-          <Link to="about">О компании</Link>
-          <div>
+          <Link to="home/package">О компании</Link>
+          <div className={style.input}>
             <input placeholder='Поиск' />
-            {/* <IoSearch className={style.icon} /> */}
           </div>
-          <Link to="home" >На главную</Link>
-          {IP ? (isAdmin ? <button onClick={() => logOut()} >Выйти</button> : <Link to="login" >Админ панель</Link> ) : null  }
+          {IP ? (isAdmin ? <div className={style.admin}>
+            <button className={style.logout} onClick={() => logOut()} >Выйти</button>
+            <Link to="admin/add" >Админ панель</Link>
+            </div> :  <Link to="login" >Войти</Link>) : null  }
         </div>
       </div>
       <div className={style.navBottom}>
@@ -32,7 +33,7 @@ const LayoutTop = () => {
         <div className={style.navSupport}>
           <p>Служба технической и консультационной поддержки</p>
           <a href='tel:+123'><FaPhone /></a>
-          <h3>123</h3>
+          <div>123</div>
         </div>
       </div> 
     </>

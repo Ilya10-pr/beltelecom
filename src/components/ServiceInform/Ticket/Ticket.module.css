@@ -1,13 +1,13 @@
 .wrapperTicket {
-  max-width: 470px;
+  max-width: 600px;
   max-height: 660px;
-  margin: 30px auto;
+  margin: 10px auto;
 }
 
 .innerTicket {
+  display: grid;
   padding: 10px;
   height: 100%;
-  width: 100%;
   background-color: #E1E1E1;
 }
 .item {
@@ -24,4 +24,9 @@
 }
 .item span{
   font-size: 20px;
+}
+button{
+  padding: 10px;
+  background-color: #33B4EE;
+  border: 1px solid #000;
 }

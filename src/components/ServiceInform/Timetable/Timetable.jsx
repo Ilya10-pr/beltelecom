@@ -5,6 +5,9 @@ import 'react-day-picker/dist/style.css';
 import { addDays, isSameDay, parseISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { CgEnter } from 'react-icons/cg';
+import { useDispatch } from 'react-redux';
+import { setDate } from '../../../store/service/service';
+import { useNavigate } from 'react-router-dom';
 
 const bookedSlots = [
   { date: '2025-04-15', times: ['10:00', '14:00', '16:30'] },
@@ -22,6 +25,8 @@ const Timetable = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [isBooked, setIsBooked] = useState(false);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   // Проверяем, полностью ли забронирована дата
   const isDateFullyBooked = (date) => {
@@ -47,9 +52,15 @@ const Timetable = () => {
   // Обработчик бронирования
   const handleBooking = () => {
     if (!selectedDate || !selectedTime) return;
-    
+    const formattedDate = selectedDate.toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
     // Здесь должна быть логика API для реального бронирования
-    console.log(`Забронировано на ${selectedDate.toDateString()} в ${selectedTime}`);
+    console.log(formattedDate, selectedTime);
+    dispatch(setDate(formattedDate + " " + selectedTime))
+    navigate("/service/info")
     setIsBooked(true);
   };
 
