@@ -1,37 +1,96 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from "./OperationsClient.module.css";
 import AddDocument from './AddDocument/AddDocument';
-export const informClients = [{name: "Прибыльский Илья Витальевич", phone: "1234567", passport: "12343214321",
-                          numClient: "1234567", document: "паспорт", copy: "паспорт.pdf", numberApp: "123456789", 
-                          description: "Пакет услуг ЯСНО 500", date: "02/03/2023"},
-                          {name: "Прибыльский Илья Витальевич", phone: "1234567", passport: "12343214321",
-                            numClient: "1234567", document: "паспорт", copy: "паспорт.pdf", numberApp: "123456789", 
-                            description: "Пакет услуг ЯСНО 500", date: "02/03/2023"}]
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import CustomBtn from '../../../CustomComponents/CustomBtn';
+import { useNavigate } from 'react-router-dom';
+const mockUserData = {
+  name: "Прибыльский Илья Витальевич",
+  phone: "+375298813723",
+  passport: "12343214321",
+  numClient: "1234567"
+};
+
+
 
 
 const OperationsClient = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const [formData, setFormData] = useState({
+      name: '',
+      phone: '',
+      passport: '',
+      numClient: ''
+    });
+    const navigate= useNavigate()
+    const foundClient = useSelector((state) => state.client.foundClient)
+    
+    useEffect(() => {
+        setUserData(foundClient);
+        setFormData({
+          name: foundClient?.surname + " " + foundClient?.name + " " + foundClient?.patronymic || '',
+          phone: foundClient?.phone || '',
+          passport: foundClient?.passport || '',
+          numClient: foundClient?.id.match(/\d+/g).join("") || ''
+        });
+
+    }, [foundClient]);
+  
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    };
+  
+    if (!userData) {
+      return <div className={style.loading}>Перейдите в поиск клиента.</div>;
+    }
   
   return (
     <div className={style.wrapperOperations}>
         <div className={style.inform}>
-            <div className={style.item}>
-              <span>ФИО:</span> 
-              <p>{informClients[0].name}</p>
-            </div>
-          <div className={style.item}>
-            <span>Номер телефона: </span>
-            <p>{informClients[0].phone}</p>
-          </div>
-          <div className={style.item}>
-            <span>Паспортные данные:</span> 
-            <p>{informClients[0].passport}</p>
-          </div>
-          <div className={style.item}>
-            <span>Номер клиента:</span> 
-            <p>{informClients[0].numClient}</p>
-          </div>
+        <div className={style.item}>
+          <span>ФИО:</span> 
+          <input
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
         </div>
+        
+        <div className={style.item}>
+          <span>Номер телефона:</span>
+          <input
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+          />
+        </div>
+        
+        <div className={style.item}>
+          <span>Паспортные данные:</span> 
+          <input
+            name="passport"
+            value={formData.passport}
+            onChange={handleInputChange}
+            placeholder={!formData.passport ? "Введите паспортные данные" : ""}
+          />
+        </div>
+        
+        <div className={style.item}>
+          <span>Номер клиента:</span> 
+          <input
+            name="numClient"
+            value={formData.numClient}
+            onChange={handleInputChange}
+            placeholder={!formData.numClient ? "Введите номер клиента" : ""}
+          />
+        </div>
+      </div>
         <button className={style.add} onClick={() => setIsOpen(true)}>Добавить документ</button>
         <div>
           <table className={style.table}>
@@ -45,19 +104,20 @@ const OperationsClient = () => {
               </tr>
             </thead>
             <tbody>
-                {informClients.map((client) => (
-              <tr>
-                <td>{client.document}</td>
-                <td>{client.copy}</td>
-                <td>{client.numberApp}</td>
-                <td>{client.description}</td>
-                <td>{client.date}</td>
+                {foundClient.document.map((document) => (
+              <tr key={document.id}>
+                <td>{document.documentType}</td>
+                <td>{document.documentFile.slice(0,9) + "." + document.documentFile.split('.').pop()}</td>
+                <td>{document.id.match(/\d+/g).join("").slice(0, 7)}</td>
+                <td>{document.description}</td>
+                <td>{document.date}</td>
               </tr>
                 ))}
             </tbody>
           </table>
         </div>
-        {isOpen && <AddDocument setIsOpen={setIsOpen} /> }
+        <CustomBtn handleClick={() => navigate("/admin/search")} text={"Сохранить"} />
+        {isOpen && <AddDocument passport={formData.passport} client={foundClient} setIsOpen={setIsOpen} /> }
     </div>
   )
 };

@@ -1,19 +1,27 @@
 import React from 'react'
 import style from "./Packages.module.css"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PopupChannels from './PopupChannels/PopupChannels';
+import { useDispatch } from 'react-redux';
+import { setServiceId } from '../../store/service/service';
 
-const Packages = ({name, price, description}) => {
+const Packages = ({name, price, description, id}) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
+  const selectService = (id) => {
+    dispatch(setServiceId({id, name}))
+    navigate("/service/operation")
+  }
 
   return (
     <div className={style.card}>
         <div className={style.description}>
-        <Link to={"/service/operation"}>
-          <div className={style.title}>{name}</div>
-          </Link>
-            <div  className={style.item}>{description}</div>
-        <PopupChannels />
+          <button className={style.btn} onClick={() => selectService(id)}>
+            <div className={style.title}>{name}</div>
+          </button>
+          <div  className={style.item}>{description}</div>
+          <PopupChannels />
         </div>
         <div className={style.price}>
             {price} р./мес. 

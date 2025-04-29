@@ -10,11 +10,21 @@
   margin: 0 auto; 
   display: flex; 
   gap: 50px; 
-  align-items: center 
+  align-items: center ;
 }
 
-.navInner div {
+.input{
   flex-grow: 1;
+}
+
+.logout{
+  border: none;
+  background-color: transparent;
+}
+.admin{
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .navInner input {
@@ -27,7 +37,7 @@
 
 .navInner button {
   color: #fff;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 400;
 }
 .icon {
@@ -39,7 +49,6 @@
 
 .navBottom {
   max-width: 1200px; 
-  height: 110px;
   margin: 0 auto ;
   display: flex ;
   justify-content: space-between ;
@@ -66,8 +75,39 @@
   color: #003C78
 }
 
-.navSupport h3 {
+.navSupport div {
   color: #003C78; 
   font-weight: 800; 
   font-size: 48px
+}
+
+
+
+@media(max-width: 1250px){
+  .navInner{
+    padding: 10px;
+  }
+  .navBottom{
+    padding: 10px;
+  }
+}
+
+@media(max-width: 720px){
+  .navTop{
+    font-size: 20px;
+  }
+  .navTop button {
+    font-size: 20px;
+  }
+}
+
+@media(max-width: 640px){
+  .navInner input {
+    display: none;
+  }
+  .navBottom{
+    display: flex;
+    flex-direction: column;
+    
+  }
 }

@@ -2,14 +2,27 @@ import React from 'react'
 import style from "./SearchClient.module.css"
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import OperationsClient from './OperationsClient/OperationsClient';
+import { getClientByName } from '../../../api/api';
+import { useDispatch } from 'react-redux';
+import { setDataClient } from '../../../store/client/client';
 
+// TODO: fix result when clicking on search 
 const SearchClient = () => {
     const {register, handleSubmit, reset} = useForm()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const searchClient = (data) => {
+    const searchClient = async (data) => {
       console.log(data)
-      navigate("/admin/options")
+      const response = await getClientByName(data)
+      if(response){
+        console.log(response)
+        dispatch(setDataClient(response))
+        navigate("/admin/options")
+      } else {
+        console.log("Не удалось найти клиента.")
+      }
     }
       return (
         <div className={style.form}>
@@ -27,14 +40,6 @@ const SearchClient = () => {
                 <div className={style.item}>
                   <label htmlFor='patronymicId'>Отчество</label>
                   <input id='patronymicId' type='text'  {...register("patronymic")}/>
-                </div>
-                <div className={style.item}>
-                  <label htmlFor='contractId'>Номер договора</label>
-                  <input id='contractId' type='password'  {...register("numContract")}/>
-                </div>
-                <div className={style.item}>
-                  <label htmlFor='appId'>Номер приложения</label>
-                  <input id='appId' type='password'  {...register("numApp")}/>
                 </div>
                 <button type="submit" className={style.btn} >
                   Поиск

@@ -8,22 +8,22 @@ import Timetable from './components/ServiceInform/Timetable/Timetable';
 import Ticket from "./components/ServiceInform/Ticket/Ticket"
 import LogIn from './components/AdminUI/LogIn/LogIn';
 import CustomSectionLinks from './components/CustomComponents/CustomSectionLinks';
-import { adminLinks, homeLinks, serviceLinks, services, servicesBtn } from './helpers/itemLink';
+import { adminLinks, homeLinks, serviceLinks, servicesBtn } from './helpers/itemLink';
 import AddService from './components/AdminUI/AddService/AddService';
 import DeleteService from './components/AdminUI/DeleteService/DeleteService';
 import SearchClient from './components/AdminUI/SearchClient/SearchClient';
 import OperationsClient from './components/AdminUI/SearchClient/OperationsClient/OperationsClient';
-import { useQuery } from '@tanstack/react-query';
-import { getAuthMe, getServices } from './api/api';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { logInAdmin } from './store/user/slice';
-// TODO:  // edit font-size and edit width input in navbar
+import TicketContainer from './components/ServiceInform/Ticket/TicketContainer';
+import Booked from './components/AdminUI/Booked/Booked';
+
+// TODO: change selecting services for package, connection package - bandle, booked, send to telegramm message 
 
 const App = () => {
   const isAdmin = false;
   const url = useLocation()
   const path = url.pathname.split("/")[2]
+
   return (
         <div className="App">
               <LayoutTop />
@@ -33,17 +33,18 @@ const App = () => {
                               : <CustomSectionLinks prefix={"/home/"} links={homeLinks}/>}
               
           <Routes>
-              <Route path={"/home/" + path} element={<PackagesContainer service={services[path]} />  } />
+              <Route path={"/home/" + path} element={<PackagesContainer />  } />
               <Route path="/service/operation" element={<Operation /> } />
               <Route path="/service/date" element={<Timetable /> } />
               <Route path="/service/info" element={<Record /> } />
-              <Route path="/service/ticket" element={<Ticket /> } />
+              <Route path="/service/ticket/:id" element={<TicketContainer /> } />
               <Route path="/login" element={<LogIn /> } />
               
               <Route path="/admin/add" element={<AddService services={servicesBtn}/> } />
               <Route path="/admin/delete" element={<DeleteService services={servicesBtn}/> } />
               <Route path="/admin/search" element={<SearchClient /> } />
               <Route path="/admin/options" element={<OperationsClient /> } />
+              <Route path="/admin/booked" element={<Booked /> } />
           </Routes>
         </div>
     

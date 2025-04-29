@@ -2,22 +2,35 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import style from "./Record.module.css"
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetInfo, resetTicket, setInfoUser } from '../../../store/service/service';
+import { createClient } from '../../../api/api';
 const Record = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset
   } = useForm();
-
-  const sendData = (data) => {
-    console.log('Отправленные данные:', data);
+  const dataClient = useSelector((state) => state.ticket);
+  
+  const sendData = async (infoUser) => {
+    console.log('Отправленные данные:', infoUser);
+    const newData = {...dataClient, infoUser}
     reset();
-    navigate("/service/ticket")
-  };
+    const response = await createClient(newData)
+    if(response){
+      navigate(`/service/ticket/${response.id}`)
+      dispatch(resetTicket())
+    } else {
+      console.log("Не удалось забронировать.")
+    }
+  }
   return (
     <div className={style.form}>
+      <div className={style.title}>Заполните личные данные</div>
       <form onSubmit={handleSubmit(sendData)}>
       <div className={style.item}>
         <label htmlFor="name">Имя</label>
@@ -35,11 +48,11 @@ const Record = () => {
         {/* {errors.name && <span >{errors.name.message}</span>} */}
       </div>
       <div className={style.item}>
-        <label htmlFor="lastname">Фамилия</label>
+        <label htmlFor="surname">Фамилия</label>
         <input
-          id="lastname"
+          id="surname"
           type="text"
-          {...register('lastname', { 
+          {...register('surname', { 
             required: 'Это поле обязательно',
             minLength: {
               value: 2,
@@ -65,11 +78,11 @@ const Record = () => {
         {/* {errors.patronymic && <span >{errors.patronymic.message}</span>} */}
       </div>
       <div className={style.item}>
-        <label htmlFor="number">Номер телефона</label>
+        <label htmlFor="phone">Номер телефона</label>
         <input
-          id="number"
+          id="phone"
           type="text"
-          {...register('number', { 
+          {...register('phone', { 
             required: 'Это поле обязательно',
             minLength: {
               value: 2,

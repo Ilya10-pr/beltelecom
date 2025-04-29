@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import  adminSlice  from './user/slice'
+import  ticketSlice  from './service/service'
+import  clientSlice  from './client/client'
 
 export default configureStore({
   reducer: {
-    admin: adminSlice
+    ticket: ticketSlice,
+    client: clientSlice
   },
 })

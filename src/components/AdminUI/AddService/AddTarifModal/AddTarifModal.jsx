@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import './AddTariffModal.css';
+import style from  './AddTariffModal.module.css';
+import { createPackage, createService, getAllServices } from '../../../../api/api';
+import { useQuery } from '@tanstack/react-query';
 
 const packageTypes = [
   { id: 'basic', name: 'Базовый' },
@@ -7,21 +9,10 @@ const packageTypes = [
   { id: 'premium', name: 'Премиум' }
 ];
 
-const serviceTypes = [
-  { id: 'internet', name: 'Высокоскоростной интернет' },
-  { id: 'tv', name: 'Телевидение' },
-  { id: 'phone', name: 'Телефония' },
-  { id: 'security', name: 'Охранная система' },
-  { id: 'internet', name: 'Интернет' },
-  { id: 'tv', name: 'Телевидение' },
-  { id: 'phone', name: 'Телефония' },
-  { id: 'security', name: 'Охранная система' }
-];
-
-function AddTariffModal({serviceId, setIsModalOpen}) {
+const AddTariffModal = ({serviceId, setIsModalOpen}) => {
   const [showPackageTypes, setShowPackageTypes] = useState(false);
   const [showServiceTypes, setShowServiceTypes] = useState(false);
-   
+  const {data, isLoading, isError, error} = useQuery({queryKey: ["serviceTypes"], queryFn: () => getAllServices("service")})
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -29,9 +20,13 @@ function AddTariffModal({serviceId, setIsModalOpen}) {
     typeService: '',
     services: []
   });
+
+  if (isLoading) return <div>Загрузка...</div>;
+  if (isError) return <div>Ошибка при загрузке данных: {error.message}</div>;
+  if (!data || data.length === 0) return <div>Забронированного времени нет</div>;
   
   const addService = (serviceId) => {
-    const service = serviceTypes.find(s => s.id === serviceId);
+    const service = data.find(s => s.id === serviceId);
     if (service && !formData.services.some(s => s.id === serviceId)) {
       setFormData({
         ...formData,
@@ -49,29 +44,36 @@ function AddTariffModal({serviceId, setIsModalOpen}) {
     });
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Отправленные данные:', formData);
     setIsModalOpen(false);
-  };
+    if(serviceId === "package"){
+      const response = await createPackage(formData)
+      response ? console.log("Pakage created") : console.log("Pakage didn`t create")
+      } else {
+        formData.category = serviceId
+        const response = await createService(formData)
+        response ? console.log("Service created") : console.log("Service didn`t create")
+      } 
+    } 
   
   const resetForm = () => {
     setFormData({
       name: '',
       price: '',
       description: '',
-      type: '',
+      typeService: '',
       services: []
     });
     setIsModalOpen(false);
   };
 
   return (
-        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>            
+        <div className={style.modalOverlay} onClick={() => setIsModalOpen(false)}>
+          <div className={style.modalContent} onClick={(e) => e.stopPropagation()}>            
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Название пакета</label>
+              <div className={style.formGroup}>
+                <label>Название</label>
                 <input
                   type="text"
                   value={formData.name}
@@ -80,17 +82,17 @@ function AddTariffModal({serviceId, setIsModalOpen}) {
                   placeholder="Введите название тарифа"
                 />
               </div>
-              <div className="form-group">
+              <div className={style.formGroup}>
                 <label>Тариф</label>
                 <input
                   type="text"
                   value={formData.price}
                   onChange={(e) => setFormData({...formData, price: e.target.value})}
                   required
-                  placeholder="Введите сумму"
+                  placeholder="Введите сумму в бел. руб."
                 />
               </div>
-              {serviceId !== "package" && <div className="form-group">
+              {serviceId !== "package" && <div className={style.formGroup}>
                 <label>Описание</label>
                 <input
                   type="text"
@@ -102,25 +104,25 @@ function AddTariffModal({serviceId, setIsModalOpen}) {
               </div>}
               
               
-              <div className="form-group">
+              <div className={style.formGroup}>
                 <label>Тип пакета</label>
                 <div className="dropdown">
                   <input
                     type="text"
-                    value={packageTypes.find(p => p.id === formData.type)?.name || ''}
+                    value={packageTypes.find(p => p.id === formData.typeService)?.name || ''}
                     readOnly
                     onClick={() => setShowPackageTypes(!showPackageTypes)}
                     placeholder="Выберите тип пакета"
                     required
                   />
                   {showPackageTypes && (
-                    <div className="dropdown-content">
+                    <div className={style.dropdownContent}>
                       {packageTypes.map((pkg) => (
                         <div
                           key={pkg.id}
-                          className="dropdown-item"
+                          className={style.dropdownItem}
                           onClick={() => {
-                            setFormData({...formData, type: pkg.id});
+                            setFormData({...formData, typeService: pkg.id});
                             setShowPackageTypes(false);
                           }}
                         >
@@ -131,15 +133,15 @@ function AddTariffModal({serviceId, setIsModalOpen}) {
                   )}
                 </div>
               </div> 
-              {serviceId === "package" &&  <div className="form-group">
+              {serviceId === "package" &&  <div className={style.formGroup}>
                 <label>Услуги</label>
-                <div className="services-container">
+                <div className={style.servicesContainer}>
                   {formData.services.map(service => (
-                    <div key={service.id} className="service-item">
+                    <div key={service.id} className={style.serviceItem}>
                       <span>{service.name}</span>
                       <button 
                         type="button" 
-                        className="remove-service-btn"
+                        className={style.removeServiceBtn}
                         onClick={() => removeService(service.id)}
                       >
                         ×
@@ -149,23 +151,23 @@ function AddTariffModal({serviceId, setIsModalOpen}) {
                   
                   <button
                     type="button"
-                    className="add-service-btn"
+                    className={style.addServiceBtn}
                     onClick={() => setShowServiceTypes(true)}
                   >
                     + Добавить услугу
                   </button>
                   
                   {showServiceTypes && (
-                    <div className="services-dropdown">
-                      {serviceTypes.map(service => (
+                    <div className={style.servicesDropdown}>
+                      {data.map(service => (
                         <button
                           key={service.id}
                           type="button"
-                          className="service-option"
+                          className={style.serviceOption}
                           onClick={() => addService(service.id)}
                           disabled={formData.services.some(s => s.id === service.id)}
                         >
-                          {service.name}
+                          {service.description}
                         </button>
                       ))}
                     </div>
@@ -174,17 +176,17 @@ function AddTariffModal({serviceId, setIsModalOpen}) {
               </div>}
 
               
-              <div className="form-actions">
+              <div className={style.formActions}>
                 <button
                   type="button"
-                  className="cancel-btn"
+                  className={style.cancelBtn}
                   onClick={resetForm}
                 >
                   Отмена
                 </button>
                 <button 
                   type="submit" 
-                  className="submit-btn"
+                  className={style.submitBtn}
                   // disabled={!formData.tariffName || !formData.packageType}
                 >
                   Добавить

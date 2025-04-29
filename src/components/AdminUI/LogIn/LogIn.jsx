@@ -4,11 +4,11 @@ import style from "./LogIn.module.css"
 import { useQueries, useQuery } from '@tanstack/react-query';
 import { loginUser } from '../../../api/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { logInAdmin } from '../../../store/user/slice';
+import { logInAdmin } from '../../../store/service/service';
 import { useNavigate } from 'react-router-dom';
 
 const LogIn = () => {
-  const isAuth = useSelector((state) => state.admin.isAuth)
+  // const isAuth = useSelector((state) => state.admin.isAuth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

@@ -18,7 +18,7 @@
   gap: 10px;
   align-items: center;
 }
-.item p{
+.item input{
   flex-grow: 1;
   height: 20px;
   background-color: #fff;
@@ -60,4 +60,10 @@
 }
 .table tr td:last-child, .table tr th:last-child {
 	border-right: none;
+}
+
+.loading{
+  margin-top: 50px;
+  font-size: 32px;
+  font-weight: 600;
 }

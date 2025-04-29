@@ -1,9 +1,16 @@
-.form{
+.form form{
   max-width: 860px;
   width: 100%;
   margin: 0 auto;
   padding: 30px 5px 5px 5px;
 }
+
+.title {
+  font-weight: 600;
+  font-size: 32px;
+  margin-top: 50px;
+}
+
 .item {
   margin-bottom: 40px;
   display: flex;

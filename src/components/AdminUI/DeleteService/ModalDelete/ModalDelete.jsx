@@ -1,47 +1,41 @@
 import { useState } from 'react';
 import './ModalDelete.css';
-const services = [
-  {
-    id: 'internet',
-    name: 'Интернет',
-    options: [
-      { id: 'inet-100', name: '100 Мбит/с - 500 ₽' },
-      { id: 'inet-300', name: '300 Мбит/с - 800 ₽' },
-      { id: 'inet-500', name: '500 Мбит/с - 1100 ₽' }
-    ]
-  },
-  {
-    id: 'tv',
-    name: 'Телевидение',
-    options: [
-      { id: 'tv-basic', name: 'Базовый пакет - 300 ₽' },
-      { id: 'tv-sport', name: 'Спортивный пакет - 450 ₽' },
-      { id: 'tv-premium', name: 'Премиум пакет - 600 ₽' }
-    ]
-  },
-  {
-    id: 'package',
-    name: 'Пакет услуг',
-    options: [
-      { id: 'pack1', name: 'Интернет + ТВ - 1200 ₽'},
-      { id: 'pack2', name: 'Интернет + ТВ + Телефон - 1500 ₽' }
-    ]
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { deleteService, getAllServices } from '../../../../api/api';
+import DeleteService from '../DeleteService';
+
+const ModalDelete = ({setIsModalOpen, point}) => {
+  const queryClient = useQueryClient()
+  const {data, isLoading, isError, error} = useQuery({
+    queryKey: ["service", point],
+    queryFn: () => getAllServices(point === "package" ? "package" : "service")
+  });
+  
+  const handleDelete = async (id) => {
+    try {
+      await deleteService(point, id);
+      queryClient.invalidateQueries(["service", point]); // Обновляем данные
+    } catch (error) {
+      console.error("Ошибка при удалении:", error);
+    }
+  };
+  
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+  if (isLoading) {
+    return <div>Загрузка...</div>;
   }
-];
-const ModalDelete = ({setIsModalOpen, isModalOpen}) => {
-  const [expandedService, setExpandedService] = useState(null);
 
+  if (isError) {
+    console.error("Ошибка при загрузке данных:", error);
+    return <div>Ошибка при загрузке данных</div>;
+  }
 
-
-  const toggleService = (serviceId) => {
-    setExpandedService(expandedService === serviceId ? null : serviceId);
-  };
-
-  const handleOptionSelect = (serviceId, optionId) => {
-    console.log(`Выбрана услуга: ${serviceId}, опция: ${optionId}`);
-    // Здесь можно добавить логику выбора опции
-    toggleService(serviceId); // Закрываем выпадающий список после выбора
-  };
+  // Если данные загружены, но пустые
+  if (!data || data.length === 0) {
+    return <div>Данные не найдены</div>;
+  }
 
   return (
 
@@ -50,34 +44,27 @@ const ModalDelete = ({setIsModalOpen, isModalOpen}) => {
             <h2>Выбор услуг</h2>
             
             <div className="services-list">
-              {services.map((service) => (
-                <div key={service.id} className="service-item">
+              {data.filter((item) => item.category === point).map((service) => (
+                <div key={service.id} className="service-items">
                   <div 
                     className="service-header"
-                    onClick={() => toggleService(service.id)}
                   >
                     <span>{service.name}</span>
-                    <svg 
+                    <button 
+                      className="confirm-btn"
+                      onClick={() => {
+                        handleDelete(service.id);
+                      }}
+                    >
+                      Удалить
+                    </button>
+                    {/* <svg 
                       className={`dropdown-icon ${expandedService === service.id ? 'expanded' : ''}`} 
                       viewBox="0 0 24 24"
                     >
                       <path d="M7 10l5 5 5-5z" />
-                    </svg>
+                    </svg> */}
                   </div>
-                  
-                  {expandedService === service.id && (
-                    <div className="options-list">
-                      {service.options.map((option) => (
-                        <button
-                          key={option.id}
-                          className="option-btn"
-                          onClick={() => handleOptionSelect(service.id, option.id)}
-                        >
-                          {option.name}
-                        </button>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
@@ -85,19 +72,11 @@ const ModalDelete = ({setIsModalOpen, isModalOpen}) => {
             <div className="modal-actions">
               <button 
                 className="cancel-btn"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => handleClose()}
               >
                 Отмена
               </button>
-              <button 
-                className="confirm-btn"
-                onClick={() => {
-                  console.log('Услуги подтверждены');
-                  setIsModalOpen(false);
-                }}
-              >
-                Подтвердить
-              </button>
+              
             </div>
           </div>
         </div>
