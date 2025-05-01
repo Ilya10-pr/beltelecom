@@ -1,12 +1,13 @@
 import React from 'react';
 import style from "./Operation.module.css"
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setService } from '../../../store/service/service';
 
 const Operation = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const dataClient = useSelector((state) => state.ticket);
 
 
   const handleService = (e) => {
@@ -17,6 +18,7 @@ const Operation = () => {
   return (
     <div className={style.operation}>
       <div>Выберите операцию</div>
+      <div className={style.service}>Выбранная услуга: {dataClient.service}</div>
       <button onClick={(e) => handleService(e)}>
         Оформление услуги
       </button>

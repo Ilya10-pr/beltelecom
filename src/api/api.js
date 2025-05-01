@@ -26,6 +26,9 @@ export const createService =  (data) => {
   return  instance.post("service", data).then((res) => res.data)
 }
 
+export const createAgreement =  (id, data) => {
+  return  instance.put(`client/agreement/${id}`, data).then((res) => res.data)
+}
 export const deleteService =  (point, serviceId) => {
   return  instance.delete(`${point}/${serviceId}`).then((res) => res.data)
 }
@@ -38,7 +41,7 @@ export const getClientById =  (id) => {
   return  instance.get(`client/${id}`).then((res) => res.data)
 }
 
-export const getAllClients =  () => {
+export const getAllRecord =  () => {
   return  instance.get(`client`).then((res) => res.data)
 }
 

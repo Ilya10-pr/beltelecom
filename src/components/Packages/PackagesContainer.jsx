@@ -36,7 +36,8 @@ const PackagesContainer = () => {
               id={item.id} 
               name={item.name} 
               price={item.price} 
-              description={item.description} 
+              description={path === "package" ? item.services : item.description} 
+              path={path}
               key={item.id} />
         ))}
     </div>

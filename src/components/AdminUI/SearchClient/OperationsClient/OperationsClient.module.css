@@ -1,8 +1,7 @@
 .wrapperOperations {
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 30px 5px 5px 5px;
-  font-size: 20px;
 }
 .wrapperOperations .add {
   padding: 8px 16px;
@@ -15,18 +14,20 @@
 }
 .item{
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 15px;
 }
 .item input{
   flex-grow: 1;
   height: 20px;
   background-color: #fff;
   padding: 5px;
+  font-size: 20px;
+  max-width: 390px;
 }
 .inform {
   display: grid;
-  max-width: 1000px;
   margin: 0 auto;
   padding: 10px;
   background-color: #EBEBEB;

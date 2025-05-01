@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import CustomBtn from '../../../CustomComponents/CustomBtn';
 import { useNavigate } from 'react-router-dom';
+import { createAgreement } from '../../../../api/api';
 const mockUserData = {
   name: "Прибыльский Илья Витальевич",
   phone: "+375298813723",
@@ -22,7 +23,11 @@ const OperationsClient = () => {
       name: '',
       phone: '',
       passport: '',
-      numClient: ''
+      numClient: '',
+      street: '',
+      house: '',
+      flat: '',
+      title: ''
     });
     const navigate= useNavigate()
     const foundClient = useSelector((state) => state.client.foundClient)
@@ -33,7 +38,11 @@ const OperationsClient = () => {
           name: foundClient?.surname + " " + foundClient?.name + " " + foundClient?.patronymic || '',
           phone: foundClient?.phone || '',
           passport: foundClient?.passport || '',
-          numClient: foundClient?.id.match(/\d+/g).join("") || ''
+          numClient: foundClient?.id.match(/\d+/g).join("").slice(0, 7) || '',
+          street: foundClient?.adress[0]?.street || '',
+          house: foundClient?.adress[0]?.house || '',
+          flat: foundClient?.adress[0]?.flat || '',
+          title: foundClient?.record[0]?.service
         });
 
     }, [foundClient]);
@@ -48,6 +57,15 @@ const OperationsClient = () => {
   
     if (!userData) {
       return <div className={style.loading}>Перейдите в поиск клиента.</div>;
+    }
+
+    const saveAgreement = async () => {
+      console.log(foundClient.id, formData)
+      const response = await createAgreement(foundClient.id, formData).catch(error => console.log("Ошибка"))
+      if(response){
+        console.log(response)
+      }
+      navigate("/admin/add")
     }
   
   return (
@@ -90,6 +108,33 @@ const OperationsClient = () => {
             placeholder={!formData.numClient ? "Введите номер клиента" : ""}
           />
         </div>
+        <div className={style.item}>
+          <span>Улица:</span> 
+          <input
+            name="street"
+            value={formData.street}
+            onChange={handleInputChange}
+            placeholder={!formData.street ? "Введите улицу" : ""}
+          />
+        </div>
+        <div className={style.item}>
+          <span>Дом:</span> 
+          <input
+            name="house"
+            value={formData.house}
+            onChange={handleInputChange}
+            placeholder={!formData.house ? "Введите дом" : ""}
+          />
+        </div>
+        <div className={style.item}>
+          <span>Квартира:</span> 
+          <input
+            name="flat"
+            value={formData.flat}
+            onChange={handleInputChange}
+            placeholder={!formData.flat ? "Введите квартиру" : ""}
+          />
+        </div>
       </div>
         <button className={style.add} onClick={() => setIsOpen(true)}>Добавить документ</button>
         <div>
@@ -116,7 +161,7 @@ const OperationsClient = () => {
             </tbody>
           </table>
         </div>
-        <CustomBtn handleClick={() => navigate("/admin/search")} text={"Сохранить"} />
+        <CustomBtn handleClick={() => saveAgreement()} text={"Сохранить"} />
         {isOpen && <AddDocument passport={formData.passport} client={foundClient} setIsOpen={setIsOpen} /> }
     </div>
   )

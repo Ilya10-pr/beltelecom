@@ -3,11 +3,12 @@ import CustomLink from '../CustomComponents/CustomSectionLinks';
 import { FaPhone } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
 import style from "./LayoutTop.module.css";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const LayoutTop = () => {
   const navigate = useNavigate()
   const isAdmin = window.localStorage.getItem("token");
+  const url = useLocation()
   const IP = true
 
   const logOut = () => {
@@ -18,7 +19,7 @@ const LayoutTop = () => {
     <>
       <div className={style.navTop}>
         <div className={style.navInner}>
-          <Link to="home/package">О компании</Link>
+          <Link to="home/package">Главная страница</Link>
           <div className={style.input}>
             <input placeholder='Поиск' />
           </div>

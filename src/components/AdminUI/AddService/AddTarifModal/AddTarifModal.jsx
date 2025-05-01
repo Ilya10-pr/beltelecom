@@ -17,13 +17,13 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
     name: '',
     price: '',
     description: '',
-    typeService: '',
+    type: '',
     services: []
   });
 
-  if (isLoading) return <div>Загрузка...</div>;
-  if (isError) return <div>Ошибка при загрузке данных: {error.message}</div>;
-  if (!data || data.length === 0) return <div>Забронированного времени нет</div>;
+  // if (isLoading) return <div>Загрузка...</div>;
+  // if (isError) return <div>Ошибка при загрузке данных: {error.message}</div>;
+  // if (!data || data.length === 0) return <div>Забронированного времени нет</div>;
   
   const addService = (serviceId) => {
     const service = data.find(s => s.id === serviceId);
@@ -31,7 +31,7 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
       setFormData({
         ...formData,
         services: [...formData.services, service],
-        description: !formData.description ? service.name :formData.description + ", " + service.name
+        // description: !formData.description ? service.name : formData.description + ", " + service.name
       });
     }
     setShowServiceTypes(false);
@@ -45,6 +45,7 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
   };
   
   const handleSubmit = async (e) => {
+    console.log(formData)
     e.preventDefault();
     setIsModalOpen(false);
     if(serviceId === "package"){
@@ -62,11 +63,12 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
       name: '',
       price: '',
       description: '',
-      typeService: '',
+      type: '',
       services: []
     });
     setIsModalOpen(false);
   };
+
 
   return (
         <div className={style.modalOverlay} onClick={() => setIsModalOpen(false)}>
@@ -103,13 +105,12 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                 />
               </div>}
               
-              
-              <div className={style.formGroup}>
+              {serviceId === "package" && <div className={style.formGroup}>
                 <label>Тип пакета</label>
-                <div className="dropdown">
+                <div className={style.dropdown}>
                   <input
                     type="text"
-                    value={packageTypes.find(p => p.id === formData.typeService)?.name || ''}
+                    value={packageTypes.find(p => p.id === formData.type)?.name || ''}
                     readOnly
                     onClick={() => setShowPackageTypes(!showPackageTypes)}
                     placeholder="Выберите тип пакета"
@@ -122,7 +123,7 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                           key={pkg.id}
                           className={style.dropdownItem}
                           onClick={() => {
-                            setFormData({...formData, typeService: pkg.id});
+                            setFormData({...formData, type: pkg.id});
                             setShowPackageTypes(false);
                           }}
                         >
@@ -132,7 +133,8 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                     </div>
                   )}
                 </div>
-              </div> 
+              </div> }
+              
               {serviceId === "package" &&  <div className={style.formGroup}>
                 <label>Услуги</label>
                 <div className={style.servicesContainer}>
@@ -159,7 +161,7 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                   
                   {showServiceTypes && (
                     <div className={style.servicesDropdown}>
-                      {data.map(service => (
+                      {data.filter(item => item.packageId === null).map(service => (
                         <button
                           key={service.id}
                           type="button"

@@ -8,12 +8,13 @@ const ModalDelete = ({setIsModalOpen, point}) => {
   const queryClient = useQueryClient()
   const {data, isLoading, isError, error} = useQuery({
     queryKey: ["service", point],
-    queryFn: () => getAllServices(point === "package" ? "package" : "service")
+    queryFn: () => getAllServices(path)
   });
+  const path = point === "package" ? "package" : "service"
   
   const handleDelete = async (id) => {
     try {
-      await deleteService(point, id);
+      await deleteService(path, id);
       queryClient.invalidateQueries(["service", point]); // Обновляем данные
     } catch (error) {
       console.error("Ошибка при удалении:", error);
@@ -32,7 +33,6 @@ const ModalDelete = ({setIsModalOpen, point}) => {
     return <div>Ошибка при загрузке данных</div>;
   }
 
-  // Если данные загружены, но пустые
   if (!data || data.length === 0) {
     return <div>Данные не найдены</div>;
   }
