@@ -39,7 +39,7 @@ export const servicesBtn = [
   {id: "smart", name: "Умный дом"},
   {id: "phone", name: "Телефон"},
   {id: "hosting", name: "Хостинг"},
-  {id: "video", name: "Видеоконтроль"}
+  {id: "observe", name: "Видеоконтроль"}
 ]
 
 

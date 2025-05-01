@@ -2,10 +2,10 @@ import React, {useState} from 'react'
 import { DayPicker } from "react-day-picker";
 import style from "./Timetabe.module.css"
 import 'react-day-picker/dist/style.css';
-import { addDays, isSameDay, parseISO } from 'date-fns';
+import { addDays, addMonths, isSameDay, parseISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { CgEnter } from 'react-icons/cg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setDate } from '../../../store/service/service';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,8 +27,8 @@ const Timetable = () => {
   const [isBooked, setIsBooked] = useState(false);
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  // Проверяем, полностью ли забронирована дата
+  const dataClient = useSelector((state) => state.ticket);
+  const twoMonthsFromNow = addMonths(new Date(), 2);
   const isDateFullyBooked = (date) => {
     const bookedDate = bookedSlots.find(booked => 
       isSameDay(parseISO(booked.date), date)
@@ -36,7 +36,6 @@ const Timetable = () => {
     return bookedDate && bookedDate.times.length === allTimeSlots.length;
   };
 
-  // Получаем доступные времена для выбранной даты
   const getAvailableTimes = () => {
     if (!selectedDate) return [];
     
@@ -49,7 +48,6 @@ const Timetable = () => {
       : allTimeSlots;
   };
 
-  // Обработчик бронирования
   const handleBooking = () => {
     if (!selectedDate || !selectedTime) return;
     const formattedDate = selectedDate.toLocaleDateString('ru-RU', {
@@ -57,14 +55,13 @@ const Timetable = () => {
       month: 'long',
       year: 'numeric'
     });
-    // Здесь должна быть логика API для реального бронирования
+
     console.log(formattedDate, selectedTime);
     dispatch(setDate(formattedDate + " " + selectedTime))
     navigate("/service/info")
     setIsBooked(true);
   };
 
-  // Модификаторы для DayPicker
   const modifiers = {
     fullyBooked: (date) => isDateFullyBooked(date),
     past: (date) => date < new Date().setHours(0, 0, 0, 0)
@@ -85,7 +82,7 @@ const Timetable = () => {
   return (
     <div className={style.bookingContainer}>
       <h2>Выберите дату и время</h2>
-      
+      <div className={style.service}>Выбранная услуга: {dataClient.service}</div>
       <DayPicker
         locale={ru}
         mode="single"
@@ -94,7 +91,8 @@ const Timetable = () => {
         modifiers={modifiers}
         modifiersStyles={modifiersStyles}
         disabled={[
-          { before: new Date() }, // Блокируем прошедшие даты
+          { before: new Date() },// Блокируем прошедшие даты
+          {after: twoMonthsFromNow}, //Показываем только 2 месяца
           (date) => isDateFullyBooked(date) // Блокируем полностью занятые даты
         ]}
         styles={{root: {

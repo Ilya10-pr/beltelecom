@@ -19,6 +19,7 @@ const Record = () => {
   const sendData = async (infoUser) => {
     console.log('Отправленные данные:', infoUser);
     const newData = {...dataClient, infoUser}
+    console.log(newData)
     reset();
     const response = await createClient(newData)
     if(response){
@@ -31,6 +32,7 @@ const Record = () => {
   return (
     <div className={style.form}>
       <div className={style.title}>Заполните личные данные</div>
+      <div className={style.service}>Выбранная услуга: {dataClient.service}</div>
       <form onSubmit={handleSubmit(sendData)}>
       <div className={style.item}>
         <label htmlFor="name">Имя</label>

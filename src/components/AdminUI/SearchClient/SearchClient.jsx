@@ -41,6 +41,10 @@ const SearchClient = () => {
                   <label htmlFor='patronymicId'>Отчество</label>
                   <input id='patronymicId' type='text'  {...register("patronymic")}/>
                 </div>
+                <div className={style.item}>
+                  <label htmlFor='numberId'>Номер телефона</label>
+                  <input id='numberId' type='text'  {...register("phone")}/>
+                </div>
                 <button type="submit" className={style.btn} >
                   Поиск
                 </button>

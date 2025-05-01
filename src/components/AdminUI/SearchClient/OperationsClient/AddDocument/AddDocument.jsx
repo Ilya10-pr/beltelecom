@@ -4,12 +4,12 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateInfoUser } from '../../../../../api/api';
 import { setDataClient } from '../../../../../store/client/client';
-
-const AddDocument = ({passport, client, setIsOpen}) => {
+const AddDocument = ({ client, setIsOpen}) => {
   const [showCategories, setShowCategories] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const dispatch = useDispatch()
-  const categories = ["Договор",
+  const categories = [
+    "Договор",
     "Приложение",
     "Свидетельство о льготе",
     "Свидетельство о браке",
@@ -30,7 +30,6 @@ const AddDocument = ({passport, client, setIsOpen}) => {
   const documentType = watch("documentType");
 
   const onSubmit = async (data) => {
-    data.passport = passport
     const dataDocument = new FormData();
     dataDocument.append("file", selectedFile);
     dataDocument.append("data", JSON.stringify(data))

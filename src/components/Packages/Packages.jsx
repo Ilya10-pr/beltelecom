@@ -5,7 +5,7 @@ import PopupChannels from './PopupChannels/PopupChannels';
 import { useDispatch } from 'react-redux';
 import { setServiceId } from '../../store/service/service';
 
-const Packages = ({name, price, description, id}) => {
+const Packages = ({name, price, description, id, path}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -20,7 +20,12 @@ const Packages = ({name, price, description, id}) => {
           <button className={style.btn} onClick={() => selectService(id)}>
             <div className={style.title}>{name}</div>
           </button>
-          <div  className={style.item}>{description}</div>
+          {path === "package" 
+                       ? description.map((item) => (
+                        <div className={style.item}>{item.description}</div>
+                      ))
+                       : <div className={style.item}>{description}</div> }
+          
           <PopupChannels />
         </div>
         <div className={style.price}>

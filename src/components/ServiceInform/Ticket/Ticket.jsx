@@ -5,22 +5,22 @@ import { deleteBookedFromList } from '../../../api/api';
 
 const Ticket = ({data, isButton = false, deleteBooked}) => {
 
-
+  const record = data.record[0]
   
   return (
           <div className={style.innerTicket}>
-            <div className={style.title}>Талон №{data.numberTicket}</div>
+            <div className={style.title}>Талон №{record.ticket}</div>
               <div className={style.item}>
                 <span>Выбранная услуга</span>
-                <span>{data.service}</span>
+                <span>{record.service}</span>
               </div>
               <div className={style.item}>
                 <span>Время приема</span>
-                <span>{data.date}</span>
+                <span>{record.date}</span>
               </div>
               <div className={style.item}>
                 <span>Тип операции</span>
-                <span>{data.action}</span>
+                <span>{record.action}</span>
               </div>
               <div>
                 <span>{`${data.surname} ${data.name} ${data.patronymic}`}</span>
