@@ -6,20 +6,29 @@ import { loginUser } from '../../../api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { logInAdmin } from '../../../store/service/service';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const LogIn = () => {
-  // const isAuth = useSelector((state) => state.admin.isAuth)
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const {register, handleSubmit, formState: {errors}, reset} = useForm()
 
   const logIn = async (data) => {
-    console.log(data)
-    const admin = await loginUser(data)
-    if(admin) {
+    try {
+      console.log(data);
+      const admin = await loginUser(data);
+      
+      toast.success("Успешно");
       window.localStorage.setItem("token", admin.token);
-      navigate("/admin/add")
+      navigate("/admin/add");
+      
+    } catch (error) {
+      console.error("Ошибка при входе:", error);
+      if (error.response?.status === 401) {
+        toast.error("Неверный логин или пароль");
+        return
+      }
+      toast.error("Произошла ошибка при входе");
     }
   }
 

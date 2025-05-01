@@ -16,6 +16,8 @@ import OperationsClient from './components/AdminUI/SearchClient/OperationsClient
 import { useEffect } from 'react';
 import TicketContainer from './components/ServiceInform/Ticket/TicketContainer';
 import Booked from './components/AdminUI/Booked/Booked';
+import { Toaster } from "react-hot-toast";
+
 
 // TODO: change selecting services for package, connection package - bandle, booked, send to telegramm message 
 
@@ -27,6 +29,7 @@ const App = () => {
   return (
         <div className="App">
               <LayoutTop />
+              <Toaster />
               {url.pathname.includes("service") 
                               ? <CustomSectionLinks prefix={"/service/"} links={serviceLinks}/> 
                               : url.pathname.includes("admin") ? <CustomSectionLinks prefix={"/admin/"} links={adminLinks}/>
