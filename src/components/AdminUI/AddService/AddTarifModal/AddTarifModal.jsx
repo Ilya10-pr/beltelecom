@@ -3,16 +3,13 @@ import style from  './AddTariffModal.module.css';
 import { createPackage, createService, getAllServices } from '../../../../api/api';
 import { useQuery } from '@tanstack/react-query';
 import { staticSearch } from '../../../../helpers/itemLink';
-const packageTypes = [
-  { id: 'basic', name: 'Базовый' },
-  { id: 'standard', name: 'Стандарт' },
-  { id: 'premium', name: 'Премиум' }
-];
+import toast from 'react-hot-toast';
+
 
 const AddTariffModal = ({serviceId, setIsModalOpen}) => {
   const [showPackageTypes, setShowPackageTypes] = useState(false);
   const [showServiceTypes, setShowServiceTypes] = useState(false);
-  const {data, isLoading, isError, error} = useQuery({queryKey: ["serviceTypes"], queryFn: () => getAllServices("service")})
+  const {data } = useQuery({queryKey: ["serviceTypes"], queryFn: () => getAllServices("service")})
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -23,17 +20,12 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
 
   const tarrifs = staticSearch.find(t => t.id === serviceId)
 
-  // if (isLoading) return <div>Загрузка...</div>;
-  // if (isError) return <div>Ошибка при загрузке данных: {error.message}</div>;
-  // if (!data || data.length === 0) return <div>Забронированного времени нет</div>;
-  
   const addService = (serviceId) => {
     const service = data.find(s => s.id === serviceId);
     if (service && !formData.services.some(s => s.id === serviceId)) {
       setFormData({
         ...formData,
         services: [...formData.services, service],
-        // description: !formData.description ? service.name : formData.description + ", " + service.name
       });
     }
     setShowServiceTypes(false);
@@ -47,18 +39,29 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
   };
   
   const handleSubmit = async (e) => {
-    console.log(formData)
-    e.preventDefault();
-    setIsModalOpen(false);
-    if(serviceId === "package"){
-      const response = await createPackage(formData)
-      response ? console.log("Pakage created") : console.log("Pakage didn`t create")
-      } else {
-        formData.category = serviceId
-        const response = await createService(formData)
-        response ? console.log("Service created") : console.log("Service didn`t create")
-      } 
-    } 
+    try {
+      e.preventDefault();
+      setIsModalOpen(false);
+      if(serviceId === "package"){
+        const response = await createPackage(formData)
+        if(!response){
+          toast.error("Ошибка, попробуйте позже...");
+          return
+        }
+        toast.success("Успешно!")
+        } else {
+          formData.category = serviceId
+          const response = await createService(formData)
+          if(!response){
+            toast.error("Ошибка, попробуйте позже...");
+            return
+          }
+          toast.success("Успешно!")
+        } 
+    } catch (error) {
+      console.log("Ошибка при добавлении:", error)
+    }
+  } 
   
   const resetForm = () => {
     setFormData({
@@ -191,7 +194,6 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                 <button 
                   type="submit" 
                   className={style.submitBtn}
-                  // disabled={!formData.tariffName || !formData.packageType}
                 >
                   Добавить
                 </button>

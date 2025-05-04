@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, {  useLayoutEffect, useRef, useState } from 'react'
 import { channels } from '../../../helpers/itemLink';
 import { useLocation } from 'react-router-dom';
 import style from "../Packages.module.css"
@@ -23,7 +23,6 @@ const PopupChannels = () => {
     const openModal = (e) => {
       e.preventDefault()
       setIsOpen(!isOpen)
-      console.log("openModal")
     }
 
   return (

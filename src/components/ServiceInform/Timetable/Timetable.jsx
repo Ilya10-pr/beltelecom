@@ -2,22 +2,15 @@ import React, {useEffect, useState} from 'react'
 import { DayPicker } from "react-day-picker";
 import style from "./Timetabe.module.css"
 import 'react-day-picker/dist/style.css';
-import { addDays, addMonths, isSameDay, parseISO } from 'date-fns';
+import { addMonths, isSameDay, parseISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { CgEnter } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDate } from '../../../store/service/service';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getAllRecord, getAllRecords } from '../../../api/api';
+import {  getAllRecords } from '../../../api/api';
 import { allTimeSlots } from '../../../helpers/itemLink';
 
-// const data = [
-//   {date: '2025-05-05', time: '09:00'},
-//   {date: '2025-05-05', time: '10:00'},
-//   {date: '2025-05-06', time: '09:00'},
-//   {date: '2025-05-06', time: '10:00'},
-// ]
 
 const Timetable = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -77,9 +70,6 @@ const Timetable = () => {
   const handleBooking = () => {
     if (!selectedDate || !selectedTime) return;
     const formattedDate = selectedDate.toLocaleDateString('en-CA');
-    const newDate = isSameDay(parseISO("2025-05-09"), selectedDate.toLocaleDateString())
-    console.log(newDate)
-    console.log(formattedDate);
     dispatch(setDate({date: formattedDate, time: selectedTime}))
     navigate("/service/info")
     setIsBooked(true);
@@ -117,9 +107,9 @@ const Timetable = () => {
         modifiers={modifiers}
         modifiersStyles={modifiersStyles}
         disabled={[
-          { before: new Date() },// Блокируем прошедшие даты
-          {after: twoMonthsFromNow}, //Показываем только 2 месяца
-          (date) => isDateFullyBooked(date) // Блокируем полностью занятые даты
+          { before: new Date() },
+          {after: twoMonthsFromNow}, 
+          (date) => isDateFullyBooked(date) 
         ]}
         styles={{root: {
           display: "flex",

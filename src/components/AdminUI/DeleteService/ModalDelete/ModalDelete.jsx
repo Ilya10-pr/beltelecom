@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import './ModalDelete.css';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteService, getAllServices } from '../../../../api/api';
-import DeleteService from '../DeleteService';
+import './ModalDelete.css';
+import toast from 'react-hot-toast';
 
 const ModalDelete = ({setIsModalOpen, point}) => {
   const queryClient = useQueryClient()
@@ -14,10 +13,16 @@ const ModalDelete = ({setIsModalOpen, point}) => {
   
   const handleDelete = async (id) => {
     try {
-      await deleteService(path, id);
-      queryClient.invalidateQueries(["service", point]); // Обновляем данные
+      const response = await deleteService(path, id);
+      if(!response){
+        toast.error("Ошибка, попробуйте позже...")
+        return
+      }
+      queryClient.invalidateQueries(["service", point]); 
+      toast.success("Успешно удалено!")
     } catch (error) {
       console.error("Ошибка при удалении:", error);
+      toast.error("Ошибка, попробуйте позже...")
     }
   };
   

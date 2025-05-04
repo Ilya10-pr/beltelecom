@@ -72,9 +72,6 @@ export const updateInfoUser = (id, data) => {
     .then((res) => res.data);
 };
 
-
-
-
 instance.interceptors.request.use((config) => {
   config.headers.Authorization = window.localStorage.getItem("token");
 

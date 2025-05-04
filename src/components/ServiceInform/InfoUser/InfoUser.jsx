@@ -3,30 +3,33 @@ import { useForm } from 'react-hook-form';
 import style from "./Record.module.css"
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetInfo, resetTicket, setInfoUser } from '../../../store/service/service';
+import {  resetTicket } from '../../../store/service/service';
 import { createClient } from '../../../api/api';
+import toast from 'react-hot-toast';
 const Record = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset
   } = useForm();
   const dataClient = useSelector((state) => state.ticket);
   
   const sendData = async (infoUser) => {
-    console.log('Отправленные данные:', infoUser);
-    const newData = {...dataClient, infoUser}
-    console.log(newData)
-    reset();
-    const response = await createClient(newData)
-    if(response){
+    try {
+      const newData = {...dataClient, infoUser}
+      reset();
+      const response = await createClient(newData)
+      if(!response){
+        toast.error("Ошибка бронирования, попробуйте позже...")
+        return
+      } 
+      toast.success("Забронированно!")
       navigate(`/service/ticket/${response.id}`)
       dispatch(resetTicket())
-    } else {
-      console.log("Не удалось забронировать.")
+    } catch (error) {
+      console.log(error)
     }
   }
   return (
@@ -51,7 +54,6 @@ const Record = () => {
             }
           })}
         />
-        {/* {errors.name && <span >{errors.name.message}</span>} */}
       </div>
       <div className={style.item}>
         <label htmlFor="surname">Фамилия</label>
@@ -66,7 +68,6 @@ const Record = () => {
             }
           })}
         />
-        {/* {errors.lastname && <span >{errors.lastname.message}</span>} */}
       </div>
       <div className={style.item}>
         <label htmlFor="patronymic">Отчетсво</label>
@@ -81,7 +82,6 @@ const Record = () => {
             }
           })}
         />
-        {/* {errors.patronymic && <span >{errors.patronymic.message}</span>} */}
       </div>
       <div className={style.item}>
         <label htmlFor="phone">Номер телефона</label>
@@ -96,7 +96,6 @@ const Record = () => {
             }
           })}
         />
-        {/* {errors.number && <span >{errors.number.message}</span>} */}
       </div>
       <button type="submit" className={style.btn} >
         Продолжить

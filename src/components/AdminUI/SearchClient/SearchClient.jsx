@@ -2,26 +2,28 @@ import React from 'react'
 import style from "./SearchClient.module.css"
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import OperationsClient from './OperationsClient/OperationsClient';
 import { getClientByName } from '../../../api/api';
 import { useDispatch } from 'react-redux';
 import { setDataClient } from '../../../store/client/client';
+import toast from 'react-hot-toast';
 
-// TODO: fix result when clicking on search 
+
 const SearchClient = () => {
-    const {register, handleSubmit, reset, formState: {errors}} = useForm()
+    const {register, handleSubmit} = useForm()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const searchClient = async (data) => {
-      console.log(data)
-      const response = await getClientByName(data)
-      if(response){
-        console.log(response)
+      try {
+        const response = await getClientByName(data)
+        if(!response){
+          toast.error("Клиент с такими данными не найден!")
+        } 
         dispatch(setDataClient(response))
-        navigate("/admin/options")
-      } else {
-        console.log("Не удалось найти клиента.")
+        navigate("/admin/options") 
+      } catch (error) {
+        console.log(error)
+        toast.error("Клиент с такими данными не найден!")
       }
     }
       return (
@@ -36,7 +38,6 @@ const SearchClient = () => {
                     type="text"  
                     {...register("name")}
                     onKeyPress={(e) => {
-                      // Разрешаем только буквы (латиница + кириллица) и пробелы
                       const isValidChar = /^[a-zA-Zа-яА-ЯёЁ\s]$/.test(e.key);
                       if (!isValidChar) {
                         e.preventDefault();
@@ -51,7 +52,6 @@ const SearchClient = () => {
                     type='text' 
                     {...register("surname")}
                     onKeyPress={(e) => {
-                      // Разрешаем только буквы (латиница + кириллица) и пробелы
                       const isValidChar = /^[a-zA-Zа-яА-ЯёЁ\s]$/.test(e.key);
                       if (!isValidChar) {
                         e.preventDefault();
@@ -65,7 +65,6 @@ const SearchClient = () => {
                     type='text'  
                     {...register("patronymic")}
                     onKeyPress={(e) => {
-                      // Разрешаем только буквы (латиница + кириллица) и пробелы
                       const isValidChar = /^[a-zA-Zа-яА-ЯёЁ\s]$/.test(e.key);
                       if (!isValidChar) {
                         e.preventDefault();
@@ -79,8 +78,7 @@ const SearchClient = () => {
                     type='text'  
                     {...register("phone")}
                     onKeyPress={(e) => {
-                      // Разрешаем только буквы (латиница + кириллица) и пробелы
-                      const isValidChar = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/.test(e.key);
+                      const isValidChar = /^[0-9!@#$%^&*()_+\-=\]{};':"\\|,.<>?]*$/.test(e.key);
                       if (!isValidChar) {
                         e.preventDefault();
                       }

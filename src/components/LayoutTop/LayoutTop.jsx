@@ -1,14 +1,11 @@
 import React from 'react'
-import CustomLink from '../CustomComponents/CustomSectionLinks';
 import { FaPhone } from 'react-icons/fa';
-import { IoSearch } from 'react-icons/io5';
 import style from "./LayoutTop.module.css";
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LayoutTop = () => {
   const navigate = useNavigate()
   const isAdmin = window.localStorage.getItem("token");
-  const url = useLocation()
   const IP = true
 
   const logOut = () => {

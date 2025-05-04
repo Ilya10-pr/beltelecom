@@ -1,6 +1,6 @@
 import React from 'react'
 import style from "./Packages.module.css"
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import PopupChannels from './PopupChannels/PopupChannels';
 import { useDispatch } from 'react-redux';
 import { setServiceId } from '../../store/service/service';
@@ -22,7 +22,7 @@ const Packages = ({name, price, description, id, path}) => {
           </button>
           {path === "package" 
                        ? description?.map((item) => (
-                        <div className={style.item}>{item.description}</div>
+                        <div key={item.id} className={style.item}>{item.description}</div>
                       ))
                        : <div className={style.item}>{description}</div> }
           
