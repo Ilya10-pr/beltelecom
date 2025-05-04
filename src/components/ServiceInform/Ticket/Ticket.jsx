@@ -1,6 +1,5 @@
 import React from 'react';
 import style from "./Ticket.module.css";
-import { deleteBookedFromList } from '../../../api/api';
 
 
 const Ticket = ({data, isButton = false, deleteBooked}) => {

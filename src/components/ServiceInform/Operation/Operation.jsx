@@ -11,7 +11,6 @@ const Operation = () => {
 
 
   const handleService = (e) => {
-    console.log(e.currentTarget.innerText)
     dispatch(setService(e.currentTarget.innerText))
     navigate("/service/date")
   }

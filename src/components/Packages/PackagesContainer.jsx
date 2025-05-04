@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import style from "./Packages.module.css";
 import Packages from './Packages';
-import { packages } from '../../helpers/itemLink';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getAllServices } from '../../api/api';
 import { staticSearch } from '../../helpers/itemLink';
-import CustomBtn from '../CustomComponents/CustomBtn';
 
 const PackagesContainer = () => {
   const url = useLocation()
   const [serviceData, setServiceData] = useState([]);
-  const [selectedTariff, setSelectedTariff] = useState(null);
+  // const [selectedTariff, setSelectedTariff] = useState(null);
   const path = url.pathname.split("/")[2]
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["service", path],
@@ -26,17 +24,16 @@ const PackagesContainer = () => {
   
     const handleTariffSelect = (tariffName) => {
       
-      setSelectedTariff(tariffName);
+      // setSelectedTariff(tariffName);
       
       if (!tariffName) {
         setServiceData(data.filter(item => item.category === path));
         return;
       }
       
-      // Фильтруем по выбранному тарифу
       const filtered = data.filter(item => 
         item.category === path && 
-        item.type === tariffName // предполагая, что у каждого item есть поле tariff
+        item.type === tariffName 
       );
       setServiceData(filtered);
     };
@@ -51,13 +48,11 @@ const PackagesContainer = () => {
     return <div>Ошибка при загрузке данных</div>;
   }
 
-  // Если данные загружены, но пустые
   if (!data || data.length === 0) {
     return <div>Данные не найдены</div>;
   }
 
   const searchBtn = staticSearch.find(t => t.id === path)
-  console.log(path)
   return (
     <div className={style.wrapperPackage}>
       {searchBtn && <div className={style.searchBtn}>

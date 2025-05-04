@@ -1,8 +1,9 @@
 import React from 'react'
 import style from "./Booked.module.css"
 import Ticket from '../../ServiceInform/Ticket/Ticket';
-import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
-import { deleteBookedFromList, getAllClients, getAllRecord } from '../../../api/api';
+import {  useQuery, useQueryClient } from '@tanstack/react-query';
+import { deleteBookedFromList, getAllRecord } from '../../../api/api';
+import toast from 'react-hot-toast';
 
 
 const Booked = () => {
@@ -11,15 +12,23 @@ const Booked = () => {
  
   if (isLoading) return <div>Загрузка...</div>;
   if (isError) return <div>Ошибка при загрузке данных: {error.message}</div>;
-  if (!data || data.length === 0) return <div>Забронированного времени нет</div>;
+  
+
   const deleteBooked = async (id) => {
-    const response = await deleteBookedFromList(id)
-    if(response){
+    try {
+      const response = await deleteBookedFromList(id)
+      if(!response){
+        toast.error("Ошибка, попробуйте позже...");
+        return
+      }
       queryClient.invalidateQueries(["booked"])
-      console.log("Удалено успешно")
+      toast.success("Запись снята!")
+    } catch (error) {
+      console.log(error)
     }
   }
   const records = data.filter((client) => client.record.length !== 0)
+  if (records.length === 0) return <div>Забронированного времени нет</div>;
   return (
     <div className={style.wrapperBooked}>
       {records.map((client) => (

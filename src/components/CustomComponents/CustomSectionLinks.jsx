@@ -1,7 +1,6 @@
 import React from 'react';
 import style from "./CustomElements.module.css";
 import { NavLink } from 'react-router-dom';
-import { isAction } from '@reduxjs/toolkit';
 
 const CustomSectionLinks = ({prefix, links}) => {
   return (

@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import style from "./OperationsClient.module.css";
 import AddDocument from './AddDocument/AddDocument';
-import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import CustomBtn from '../../../CustomComponents/CustomBtn';
 import { useNavigate } from 'react-router-dom';
 import { createAgreement, deleteBookedFromList } from '../../../../api/api';
-const mockUserData = {
-  name: "Прибыльский Илья Витальевич",
-  phone: "+375298813723",
-  passport: "12343214321",
-  numClient: "1234567"
-};
-
-
+import toast from 'react-hot-toast';
 
 
 const OperationsClient = () => {
@@ -54,13 +46,18 @@ const OperationsClient = () => {
     }
 
     const saveAgreement = async () => {
-      console.log(foundClient.id, formData)
-      const response = await createAgreement(foundClient.id, formData).catch(error => console.log("Ошибка"))
-      if(response){
+      try {
+        const response = await createAgreement(foundClient.id, formData)
+        if(!response){
+          toast.error("Ошибка, попробуйте позже...")
+          return
+        }
+        toast.success("Договор сохранен!")
         await deleteBookedFromList(response.id)
-        console.log(response)
+        navigate("/admin/add")
+      } catch (error) {
+        console.log(error)
       }
-      navigate("/admin/add")
     }
   
   return (

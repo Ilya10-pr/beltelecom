@@ -1,21 +1,17 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import style from "./LogIn.module.css"
-import { useQueries, useQuery } from '@tanstack/react-query';
 import { loginUser } from '../../../api/api';
-import { useDispatch, useSelector } from 'react-redux';
-import { logInAdmin } from '../../../store/service/service';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const LogIn = () => {
   const navigate = useNavigate()
 
-  const {register, handleSubmit, formState: {errors}, reset} = useForm()
+  const {register, handleSubmit, formState: {errors}} = useForm()
 
   const logIn = async (data) => {
     try {
-      console.log(data);
       const admin = await loginUser(data);
       
       toast.success("Успешно");

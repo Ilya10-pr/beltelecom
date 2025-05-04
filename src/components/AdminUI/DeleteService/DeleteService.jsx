@@ -3,15 +3,11 @@ import CustomBtn from '../../CustomComponents/CustomBtn';
 import style from "../AddService/AddService.module.css"
 import ModalDelete from './ModalDelete/ModalDelete';
 import { servicesBtn } from '../../../helpers/itemLink';
-import { useQuery } from '@tanstack/react-query';
+
+
 const DeleteService = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-
-  const deleteService = () => {
-    setIsModalOpen(true)
-    console.log("Delete service")
-  }
 
   return (
     <div className={style.delete}>

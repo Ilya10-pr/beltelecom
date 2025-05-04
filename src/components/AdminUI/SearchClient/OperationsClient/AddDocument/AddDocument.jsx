@@ -1,22 +1,18 @@
 import { useState } from 'react';
-import style from './AddDocument.module.css'; // Создадим этот файл
+import style from './AddDocument.module.css';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateInfoUser } from '../../../../../api/api';
 import { setDataClient } from '../../../../../store/client/client';
+import { categories } from '../../../../../helpers/itemLink';
+import toast from 'react-hot-toast';
+
+
 const AddDocument = ({ client, setIsOpen}) => {
   const [showCategories, setShowCategories] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const dispatch = useDispatch()
-  const categories = [
-    "Договор",
-    "Приложение",
-    "Свидетельство о льготе",
-    "Свидетельство о браке",
-    "Свидетельство о сметри",
-    "Свидетельство",
-    "Другое"
-];
+
 
   const { 
     register, 
@@ -30,13 +26,23 @@ const AddDocument = ({ client, setIsOpen}) => {
   const documentType = watch("documentType");
 
   const onSubmit = async (data) => {
-    const dataDocument = new FormData();
-    dataDocument.append("file", selectedFile);
-    dataDocument.append("data", JSON.stringify(data))
-    const response = await updateInfoUser(client.id, dataDocument).catch((error) => console.log(error))
-    dispatch(setDataClient(response))
-    setIsOpen(false);
-    resetForm();
+    try {
+      const dataDocument = new FormData();
+      dataDocument.append("file", selectedFile);
+      dataDocument.append("data", JSON.stringify(data))
+      const response = await updateInfoUser(client.id, dataDocument)
+      if(!response) {
+        toast.error("Ошибка, попробуйте позже...")
+        return
+      }
+      toast.success("Документы добавлены!")
+      dispatch(setDataClient(response))
+      setIsOpen(false);
+      resetForm();
+      
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const resetForm = () => {
