@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import TicketContainer from './components/ServiceInform/Ticket/TicketContainer';
 import Booked from './components/AdminUI/Booked/Booked';
 import { Toaster } from "react-hot-toast";
+import EditTime from './components/AdminUI/EditTime/EditTime';
 
 
 // TODO: change selecting services for package, connection package - bandle, booked, send to telegramm message 
@@ -48,6 +49,7 @@ const App = () => {
               <Route path="/admin/search" element={<SearchClient /> } />
               <Route path="/admin/options" element={<OperationsClient /> } />
               <Route path="/admin/booked" element={<Booked /> } />
+              <Route path="/admin/edit" element={<EditTime /> } />
           </Routes>
         </div>
     

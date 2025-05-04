@@ -15,6 +15,10 @@
   display: flex;
   justify-content: space-between;
 }
+
+.item .error {
+  border: 1px solid #ff0000;
+}
 .item input {
   width: 400px;
   background-color: #E1E1E1;

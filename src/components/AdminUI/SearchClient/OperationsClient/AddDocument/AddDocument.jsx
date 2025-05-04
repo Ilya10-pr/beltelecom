@@ -109,6 +109,24 @@ const AddDocument = ({ client, setIsOpen}) => {
                   <span className={style.message}>Выберите файл документа</span>
                 )}
               </div>
+              <div className={style.item}>
+                <label>Улица</label>
+                <textarea
+                  {...register("street")}
+                />
+              </div>
+              <div className={style.item}>
+                <label>Дом</label>
+                <textarea
+                  {...register("house")}
+                />
+              </div>
+              <div className={style.item}>
+                <label>Квартира</label>
+                <textarea
+                  {...register("flat")}
+                />
+              </div>
 
               <div className={style.formActions}>
                 <button

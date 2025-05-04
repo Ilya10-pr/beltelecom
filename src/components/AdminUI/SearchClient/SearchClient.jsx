@@ -9,7 +9,7 @@ import { setDataClient } from '../../../store/client/client';
 
 // TODO: fix result when clicking on search 
 const SearchClient = () => {
-    const {register, handleSubmit, reset} = useForm()
+    const {register, handleSubmit, reset, formState: {errors}} = useForm()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -31,19 +31,60 @@ const SearchClient = () => {
               <div className={style.innerForm}>
                 <div className={style.item}>
                   <label htmlFor="nameId">Имя</label>
-                  <input id='nameId' type="text"  {...register("name")}/>
+                  <input 
+                    id='nameId' 
+                    type="text"  
+                    {...register("name")}
+                    onKeyPress={(e) => {
+                      // Разрешаем только буквы (латиница + кириллица) и пробелы
+                      const isValidChar = /^[a-zA-Zа-яА-ЯёЁ\s]$/.test(e.key);
+                      if (!isValidChar) {
+                        e.preventDefault();
+                      }
+                    }}
+                    />
                 </div>
                 <div className={style.item}>
                   <label htmlFor='surnameId'>Фамилия</label>
-                  <input id='surnameId' type='text' {...register("surname")}/>
+                  <input 
+                    id='surnameId' 
+                    type='text' 
+                    {...register("surname")}
+                    onKeyPress={(e) => {
+                      // Разрешаем только буквы (латиница + кириллица) и пробелы
+                      const isValidChar = /^[a-zA-Zа-яА-ЯёЁ\s]$/.test(e.key);
+                      if (!isValidChar) {
+                        e.preventDefault();
+                      }
+                    }}/>
                 </div>
                 <div className={style.item}>
                   <label htmlFor='patronymicId'>Отчество</label>
-                  <input id='patronymicId' type='text'  {...register("patronymic")}/>
+                  <input 
+                    id='patronymicId' 
+                    type='text'  
+                    {...register("patronymic")}
+                    onKeyPress={(e) => {
+                      // Разрешаем только буквы (латиница + кириллица) и пробелы
+                      const isValidChar = /^[a-zA-Zа-яА-ЯёЁ\s]$/.test(e.key);
+                      if (!isValidChar) {
+                        e.preventDefault();
+                      }
+                    }}/>
                 </div>
                 <div className={style.item}>
                   <label htmlFor='numberId'>Номер телефона</label>
-                  <input id='numberId' type='text'  {...register("phone")}/>
+                  <input 
+                    id='numberId' 
+                    type='text'  
+                    {...register("phone")}
+                    onKeyPress={(e) => {
+                      // Разрешаем только буквы (латиница + кириллица) и пробелы
+                      const isValidChar = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/.test(e.key);
+                      if (!isValidChar) {
+                        e.preventDefault();
+                      }
+                    }}/>
                 </div>
                 <button type="submit" className={style.btn} >
                   Поиск

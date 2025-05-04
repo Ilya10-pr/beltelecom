@@ -21,7 +21,7 @@ const Packages = ({name, price, description, id, path}) => {
             <div className={style.title}>{name}</div>
           </button>
           {path === "package" 
-                       ? description.map((item) => (
+                       ? description?.map((item) => (
                         <div className={style.item}>{item.description}</div>
                       ))
                        : <div className={style.item}>{description}</div> }

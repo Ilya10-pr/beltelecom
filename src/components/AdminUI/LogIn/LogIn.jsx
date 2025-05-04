@@ -38,36 +38,33 @@ const LogIn = () => {
         <form action={handleSubmit(logIn)}>
           <div className={style.item}>
             <label htmlFor="nameId">Имя</label>
-            <input id='nameId' type="text" {...register("name", {
+            <input className={errors.name?.message ? style.error : ''} id='nameId' type="text" {...register("name", {
               required: 'Это поле обязательно',
               minLength: {
                 value: 2,
                 message: 'Минимум 2 символа'
               }
             })} />
-            {/* {errors.name && <span >{errors.name.message}</span>} */}
           </div>
           <div className={style.item}>
             <label htmlFor='surnameId'>Фамилия</label>
-            <input id='surnameId' type='text' {...register("surname", {
+            <input className={errors.surname?.message ? style.error : ''} id='surnameId' type='text' {...register("surname", {
               required: 'Это поле обязательно',
               minLength: {
                 value: 2,
                 message: "Минимум 2 символа"
               }
             })}/>
-            {/* errors.surname && <span>{errors.surname.message}</span> */}
           </div>
           <div className={style.item}>
             <label htmlFor='patronymicId'>Отчество</label>
-            <input id='patronymicId' type='text' {...register("patronymic", {
+            <input className={errors.patronymic?.message ? style.error : ''} id='patronymicId' type='text' {...register("patronymic", {
               required: 'Это поле обязательно',
               minLength: {
                 value: 2,
                 message: "Минимум 2 символа"
               }
             })}/>
-            {/* errors.patronymic && <span>{errors.patronymic.message}</span> */}
           </div>
           <div className={style.item}>
             <label htmlFor='passwordId'>Пароль</label>
@@ -78,7 +75,6 @@ const LogIn = () => {
                 message: "Минимум 2 символа"
               }
             })}/>
-            {/* errors.password && <span>{errors.password.message}</span> */}
           </div>
           <button type="submit" className={style.btn} >
             Продолжить

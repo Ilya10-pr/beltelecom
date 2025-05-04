@@ -2,7 +2,7 @@ import { useState } from 'react';
 import style from  './AddTariffModal.module.css';
 import { createPackage, createService, getAllServices } from '../../../../api/api';
 import { useQuery } from '@tanstack/react-query';
-
+import { staticSearch } from '../../../../helpers/itemLink';
 const packageTypes = [
   { id: 'basic', name: 'Базовый' },
   { id: 'standard', name: 'Стандарт' },
@@ -20,6 +20,8 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
     type: '',
     services: []
   });
+
+  const tarrifs = staticSearch.find(t => t.id === serviceId)
 
   // if (isLoading) return <div>Загрузка...</div>;
   // if (isError) return <div>Ошибка при загрузке данных: {error.message}</div>;
@@ -105,12 +107,12 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                 />
               </div>}
               
-              {serviceId === "package" && <div className={style.formGroup}>
+              {tarrifs && <div className={style.formGroup}>
                 <label>Тип пакета</label>
                 <div className={style.dropdown}>
                   <input
                     type="text"
-                    value={packageTypes.find(p => p.id === formData.type)?.name || ''}
+                    value={tarrifs.btnServices.find(p => p.name === formData.type)?.name || ''}
                     readOnly
                     onClick={() => setShowPackageTypes(!showPackageTypes)}
                     placeholder="Выберите тип пакета"
@@ -118,12 +120,12 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                   />
                   {showPackageTypes && (
                     <div className={style.dropdownContent}>
-                      {packageTypes.map((pkg) => (
+                      {tarrifs.btnServices.map((pkg) => (
                         <div
                           key={pkg.id}
                           className={style.dropdownItem}
                           onClick={() => {
-                            setFormData({...formData, type: pkg.id});
+                            setFormData({...formData, type: pkg.name});
                             setShowPackageTypes(false);
                           }}
                         >
@@ -140,7 +142,7 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                 <div className={style.servicesContainer}>
                   {formData.services.map(service => (
                     <div key={service.id} className={style.serviceItem}>
-                      <span>{service.name}</span>
+                      <span>{service.description}</span>
                       <button 
                         type="button" 
                         className={style.removeServiceBtn}

@@ -1,10 +1,15 @@
 .bookingContainer {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+
+.dayPicker{
+  display: flex;
   justify-content: center;
 }
 
@@ -29,24 +34,18 @@
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 15px;
+  justify-content: center;
 }
 
-.timeBtn {
-  padding: 8px 15px;
+.timeLabel {
+  padding: 4px 10px;
   background: #f0f0f0;
   border: 1px solid #ddd;
   border-radius: 4px;
-  cursor: pointer;
 }
-
-.timeBtn:hover {
-  background: #e0e0e0;
-}
-
-.timeBtn .active {
-  background: #4CAF50;
-  color: white;
-  border-color: #45a049;
+.checkbox {
+  width: 30px;
+  height: 30px;
 }
 
 .bookBtn {

@@ -20,12 +20,9 @@ const LayoutTop = () => {
       <div className={style.navTop}>
         <div className={style.navInner}>
           <Link to="home/package">Главная страница</Link>
-          <div className={style.input}>
-            <input placeholder='Поиск' />
-          </div>
           {IP ? (isAdmin ? <div className={style.admin}>
-            <button className={style.logout} onClick={() => logOut()} >Выйти</button>
             <Link to="admin/add" >Админ панель</Link>
+            <button className={style.logout} onClick={() => logOut()} >Выйти</button>
             </div> :  <Link to="login" >Войти</Link>) : null  }
         </div>
       </div>

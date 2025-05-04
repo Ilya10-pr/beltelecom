@@ -19,11 +19,18 @@ export const getAllServices = (path) => {
   return  instance.get(`${path}`).then((res) => res.data)
 }
 
+export const getAllRecords = () => {
+  return  instance.get("record").then((res) => res.data)
+}
+
 export const createPackage =  (data) => {
   return instance.post("package", data).then((res) => res.data)
 }
 export const createService =  (data) => {
   return  instance.post("service", data).then((res) => res.data)
+}
+export const createRecords =  (data) => {
+  return  instance.post("record", data).then((res) => res.data)
 }
 
 export const createAgreement =  (id, data) => {
@@ -65,15 +72,7 @@ export const updateInfoUser = (id, data) => {
     .then((res) => res.data);
 };
 
-export const updatePhoto = (id, data) => {
-  return instance
-    .put(`user/photo/${id}`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((res) => res.data);
-};
+
 
 
 instance.interceptors.request.use((config) => {
