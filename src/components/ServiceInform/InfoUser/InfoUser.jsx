@@ -31,9 +31,13 @@ const Record = () => {
   }
   return (
     <div className={style.form}>
-      <div className={style.title}>Заполните личные данные</div>
-      <div className={style.service}>Выбранная услуга: {dataClient.service}</div>
+      <div className={style.service}>
+        <div>Услуга: {dataClient.service}</div>
+        <div>Операция: {dataClient.action}</div>
+        <div>Дата и время: {dataClient.date} {dataClient.time}</div>
+      </div>
       <form onSubmit={handleSubmit(sendData)}>
+      <div className={style.title}>Заполните личные данные</div>
       <div className={style.item}>
         <label htmlFor="name">Имя</label>
         <input

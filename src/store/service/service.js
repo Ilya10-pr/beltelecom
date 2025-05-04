@@ -6,6 +6,7 @@ const initialState = {
   serviceId: null,
   action: null,
   date: null,
+  time: null,
   infoUser: null
 };
 export const ticketSlice = createSlice({
@@ -20,7 +21,8 @@ export const ticketSlice = createSlice({
       state.action = action.payload
     },
     setDate: (state, action) => {
-      state.date = action.payload
+      state.date = action.payload.date
+      state.time = action.payload.time
     },
     resetTicket: () => initialState
   },

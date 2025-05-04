@@ -17,8 +17,8 @@ const Operation = () => {
   }
   return (
     <div className={style.operation}>
-      <div>Выберите операцию</div>
       <div className={style.service}>Выбранная услуга: {dataClient.service}</div>
+      <div>Выберите операцию</div>
       <button onClick={(e) => handleService(e)}>
         Оформление услуги
       </button>

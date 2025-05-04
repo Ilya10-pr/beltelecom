@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { DayPicker } from "react-day-picker";
 import style from "./Timetabe.module.css"
 import 'react-day-picker/dist/style.css';
@@ -8,56 +8,79 @@ import { CgEnter } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDate } from '../../../store/service/service';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getAllRecord, getAllRecords } from '../../../api/api';
+import { allTimeSlots } from '../../../helpers/itemLink';
 
-const bookedSlots = [
-  { date: '2025-04-15', times: ['10:00', '14:00', '16:30'] },
-  { date: '2025-04-16', times: ['09:00', '11:00', '15:00'] },
-  { date: '2025-04-20', times: ['09:00', '10:00', '11:00', '12:00', 
-  '13:00', '14:00', '15:00', '16:00', '17:00'] } // Полностью забронированный день
-];
-
-const allTimeSlots = [
-  '09:00', '10:00', '11:00', '12:00', 
-  '13:00', '14:00', '15:00', '16:00', '17:00'
-];
+// const data = [
+//   {date: '2025-05-05', time: '09:00'},
+//   {date: '2025-05-05', time: '10:00'},
+//   {date: '2025-05-06', time: '09:00'},
+//   {date: '2025-05-06', time: '10:00'},
+// ]
 
 const Timetable = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
+  const [blockedData, setBlockedData] = useState(null);
   const [isBooked, setIsBooked] = useState(false);
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const dataClient = useSelector((state) => state.ticket);
+  const {data } = useQuery({queryKey: ["record"], queryFn:() => getAllRecords() })
+
+  useEffect(() => {
+    if(data){
+      const result = data.reduce((acc, current) => {
+        // Ищем есть ли уже запись с такой датой
+        const existingDate = acc.find(item => item.date === current.date);
+        
+        if (existingDate) {
+          // Если дата уже есть - добавляем время в массив
+          existingDate.time.push(current.time);
+        } else {
+          // Если даты нет - создаем новую запись
+          acc.push({
+            date: current.date,
+            time: [current.time]
+          });
+        }
+        
+        return acc;
+      }, []);
+      setBlockedData(result)
+    } else {
+      setBlockedData([])
+    }
+  }, [data])
   const twoMonthsFromNow = addMonths(new Date(), 2);
+  
   const isDateFullyBooked = (date) => {
-    const bookedDate = bookedSlots.find(booked => 
+    const bookedDate = blockedData?.find(booked => 
       isSameDay(parseISO(booked.date), date)
     );
-    return bookedDate && bookedDate.times.length === allTimeSlots.length;
+    return bookedDate && bookedDate.time.length === allTimeSlots.length;
   };
 
   const getAvailableTimes = () => {
     if (!selectedDate) return [];
     
-    const bookedDate = bookedSlots.find(booked => 
+    const bookedDate = blockedData?.find(booked => 
       isSameDay(parseISO(booked.date), selectedDate)
     );
     
     return bookedDate 
-      ? allTimeSlots.filter(time => !bookedDate.times.includes(time))
+      ? allTimeSlots.filter(time => !bookedDate.time.includes(time))
       : allTimeSlots;
   };
 
   const handleBooking = () => {
     if (!selectedDate || !selectedTime) return;
-    const formattedDate = selectedDate.toLocaleDateString('ru-RU', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
-
-    console.log(formattedDate, selectedTime);
-    dispatch(setDate(formattedDate + " " + selectedTime))
+    const formattedDate = selectedDate.toLocaleDateString('en-CA');
+    const newDate = isSameDay(parseISO("2025-05-09"), selectedDate.toLocaleDateString())
+    console.log(newDate)
+    console.log(formattedDate);
+    dispatch(setDate({date: formattedDate, time: selectedTime}))
     navigate("/service/info")
     setIsBooked(true);
   };
@@ -81,8 +104,11 @@ const Timetable = () => {
 
   return (
     <div className={style.bookingContainer}>
+      <div className={style.service}>
+        <div>Услуга: {dataClient.service}</div>
+        <div>Операция: {dataClient.action}</div>
+      </div>
       <h2>Выберите дату и время</h2>
-      <div className={style.service}>Выбранная услуга: {dataClient.service}</div>
       <DayPicker
         locale={ru}
         mode="single"

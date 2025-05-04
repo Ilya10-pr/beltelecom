@@ -35,6 +35,14 @@
   background-color: transparent;
 }
 
+.searchBtn button{
+  font-size: 20px;
+    width: fit-content;
+    color: #fff;
+    white-space: nowrap;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
 .price{
   display: flex;
   border-left: 1px solid #fff;

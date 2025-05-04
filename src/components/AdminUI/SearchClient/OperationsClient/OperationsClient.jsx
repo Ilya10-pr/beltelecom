@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import CustomBtn from '../../../CustomComponents/CustomBtn';
 import { useNavigate } from 'react-router-dom';
-import { createAgreement } from '../../../../api/api';
+import { createAgreement, deleteBookedFromList } from '../../../../api/api';
 const mockUserData = {
   name: "Прибыльский Илья Витальевич",
   phone: "+375298813723",
@@ -24,9 +24,6 @@ const OperationsClient = () => {
       phone: '',
       passport: '',
       numClient: '',
-      street: '',
-      house: '',
-      flat: '',
       title: ''
     });
     const navigate= useNavigate()
@@ -39,9 +36,6 @@ const OperationsClient = () => {
           phone: foundClient?.phone || '',
           passport: foundClient?.passport || '',
           numClient: foundClient?.id.match(/\d+/g).join("").slice(0, 7) || '',
-          street: foundClient?.adress[0]?.street || '',
-          house: foundClient?.adress[0]?.house || '',
-          flat: foundClient?.adress[0]?.flat || '',
           title: foundClient?.record[0]?.service
         });
 
@@ -63,6 +57,7 @@ const OperationsClient = () => {
       console.log(foundClient.id, formData)
       const response = await createAgreement(foundClient.id, formData).catch(error => console.log("Ошибка"))
       if(response){
+        await deleteBookedFromList(response.id)
         console.log(response)
       }
       navigate("/admin/add")
@@ -106,33 +101,6 @@ const OperationsClient = () => {
             value={formData.numClient}
             onChange={handleInputChange}
             placeholder={!formData.numClient ? "Введите номер клиента" : ""}
-          />
-        </div>
-        <div className={style.item}>
-          <span>Улица:</span> 
-          <input
-            name="street"
-            value={formData.street}
-            onChange={handleInputChange}
-            placeholder={!formData.street ? "Введите улицу" : ""}
-          />
-        </div>
-        <div className={style.item}>
-          <span>Дом:</span> 
-          <input
-            name="house"
-            value={formData.house}
-            onChange={handleInputChange}
-            placeholder={!formData.house ? "Введите дом" : ""}
-          />
-        </div>
-        <div className={style.item}>
-          <span>Квартира:</span> 
-          <input
-            name="flat"
-            value={formData.flat}
-            onChange={handleInputChange}
-            placeholder={!formData.flat ? "Введите квартиру" : ""}
           />
         </div>
       </div>

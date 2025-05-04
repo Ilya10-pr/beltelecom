@@ -16,7 +16,7 @@ const Ticket = ({data, isButton = false, deleteBooked}) => {
               </div>
               <div className={style.item}>
                 <span>Время приема</span>
-                <span>{record.date}</span>
+                <span>{record.date} {record.time}</span>
               </div>
               <div className={style.item}>
                 <span>Тип операции</span>
