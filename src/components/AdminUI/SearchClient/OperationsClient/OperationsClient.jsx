@@ -11,6 +11,10 @@ import toast from 'react-hot-toast';
 const OperationsClient = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [userData, setUserData] = useState(null);
+    const [passport, setPassport] = useState('');
+  const [error, setError] = useState('');
+
+  
     const [formData, setFormData] = useState({
       name: '',
       phone: '',
@@ -20,7 +24,7 @@ const OperationsClient = () => {
     });
     const navigate= useNavigate()
     const foundClient = useSelector((state) => state.client.foundClient)
-    
+    const dataAdress = `ул. ${foundClient?.adress[0].street}, д. ${foundClient?.adress[0].house}, кв. ${foundClient?.adress[0].flat}`
     useEffect(() => {
         setUserData(foundClient);
         setFormData({
@@ -33,12 +37,18 @@ const OperationsClient = () => {
 
     }, [foundClient]);
   
+
     const handleInputChange = (e) => {
       const { name, value } = e.target;
       setFormData(prev => ({
         ...prev,
         [name]: value
       }));
+      if (value.length !== 14) {
+        setError('Данные не корректны');
+        return
+      }
+      setError('');
     };
   
     if (!userData) {
@@ -84,11 +94,19 @@ const OperationsClient = () => {
         <div className={style.item}>
           <span>Паспортные данные:</span> 
           <input
+            type='text'
             name="passport"
             value={formData.passport}
             onChange={handleInputChange}
             placeholder={!formData.passport ? "Введите паспортные данные" : ""}
+            onKeyPress={(e) => {
+              const isValidChar = /^[0-9!@#$%^&*()_+\-=\]{};':"\\|,.<>?]*$/.test(e.key);
+              if (!isValidChar) {
+                e.preventDefault();
+              }
+            }}
           />
+          {error && <p className={style.errors}>{error}</p>}
         </div>
         
         <div className={style.item}>
@@ -110,6 +128,7 @@ const OperationsClient = () => {
                 <th>Ксерокопия документа</th>
                 <th>Номер приложения</th>
                 <th>Описание</th>
+                <th>Адрес</th>
                 <th>Дата</th>
               </tr>
             </thead>
@@ -120,13 +139,14 @@ const OperationsClient = () => {
                 <td>{document.documentFile.slice(0,9) + "." + document.documentFile.split('.').pop()}</td>
                 <td>{document.id.match(/\d+/g).join("").slice(0, 7)}</td>
                 <td>{document.description}</td>
+                <td>{dataAdress}</td>
                 <td>{document.date}</td>
               </tr>
                 ))}
             </tbody>
           </table>
         </div>
-        <CustomBtn handleClick={() => saveAgreement()} text={"Сохранить"} />
+        <CustomBtn error={error ? true : false} handleClick={() => saveAgreement()} text={"Сохранить"} />
         {isOpen && <AddDocument passport={formData.passport} client={foundClient} setIsOpen={setIsOpen} /> }
     </div>
   )

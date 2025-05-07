@@ -125,12 +125,24 @@ const AddDocument = ({ client, setIsOpen}) => {
                 <label>Дом</label>
                 <textarea
                   {...register("house")}
+                  onKeyPress={(e) => {
+                      const isValidChar = /^[0-9!@#$%^&*()_+\-=\]{};':"\\|,.<>?]*$/.test(e.key);
+                      if (!isValidChar) {
+                        e.preventDefault();
+                      }
+                    }}
                 />
               </div>
               <div className={style.item}>
                 <label>Квартира</label>
                 <textarea
                   {...register("flat")}
+                  onKeyPress={(e) => {
+                      const isValidChar = /^[0-9!@#$%^&*()_+\-=\]{};':"\\|,.<>?]*$/.test(e.key);
+                      if (!isValidChar) {
+                        e.preventDefault();
+                      }
+                    }}
                 />
               </div>
 

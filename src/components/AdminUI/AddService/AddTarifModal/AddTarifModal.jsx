@@ -4,7 +4,7 @@ import { createPackage, createService, getAllServices } from '../../../../api/ap
 import { useQuery } from '@tanstack/react-query';
 import { staticSearch } from '../../../../helpers/itemLink';
 import toast from 'react-hot-toast';
-
+import { typeTitle } from '../../../../helpers/itemLink';
 
 const AddTariffModal = ({serviceId, setIsModalOpen}) => {
   const [showPackageTypes, setShowPackageTypes] = useState(false);
@@ -19,7 +19,7 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
   });
 
   const tarrifs = staticSearch.find(t => t.id === serviceId)
-
+  const type = typeTitle.find(type => type.id === serviceId)
   const addService = (serviceId) => {
     const service = data.find(s => s.id === serviceId);
     if (service && !formData.services.some(s => s.id === serviceId)) {
@@ -97,6 +97,12 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                   onChange={(e) => setFormData({...formData, price: e.target.value})}
                   required
                   placeholder="Введите сумму в бел. руб."
+                  onKeyPress={(e) => {
+                    const isValidChar = /^[0-9.,]+$/.test(e.key);
+                    if (!isValidChar) {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div>
               {serviceId !== "package" && <div className={style.formGroup}>
@@ -111,7 +117,7 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
               </div>}
               
               {tarrifs && <div className={style.formGroup}>
-                <label>Тип пакета</label>
+                <label>Тип {type.name}</label>
                 <div className={style.dropdown}>
                   <input
                     type="text"
