@@ -76,7 +76,9 @@ const SearchClient = () => {
                   <input 
                     id='numberId' 
                     type='text'  
-                    {...register("phone")}
+                    {...register("phone", 
+                      
+                    )}
                     onKeyPress={(e) => {
                       const isValidChar = /^[0-9!@#$%^&*()_+\-=\]{};':"\\|,.<>?]*$/.test(e.key);
                       if (!isValidChar) {

@@ -17,6 +17,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  position: relative;
 }
 .item input{
   flex-grow: 1;
@@ -61,6 +62,14 @@
 }
 .table tr td:last-child, .table tr th:last-child {
 	border-right: none;
+}
+
+.errors{
+  position: absolute;
+  bottom: 17px;
+  left: 283px;
+  font-size: 16px;
+  color: #ff0000;
 }
 
 .loading{

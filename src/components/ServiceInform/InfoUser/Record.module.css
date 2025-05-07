@@ -31,16 +31,39 @@ form{
   margin: 0 auto;
 }
 
+.errors {
+  font-size: 16px;
+  color: #ff0000;
+  display: block;
+  position: absolute;
+  bottom: 15px;
+  left: 295px;
+}
+
 .item {
   margin-bottom: 40px;
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 .item input {
   width: 60%;
   background-color: #E1E1E1;
   border: none;
 }
+
+.disabled{
+  opacity: 0.5;         
+  cursor: not-allowed;  
+  pointer-events: none;
+  padding: 10px;
+  background-color: #33B4EE;
+  border: none;
+  color: #fff;
+  font-weight: 400;
+  font-size: 24px;
+}
+
 .btn{
   padding: 10px;
   background-color: #33B4EE;
@@ -48,5 +71,18 @@ form{
   color: #fff;
   font-weight: 400;
   font-size: 24px;
+}
+.checkbox {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+.checkbox input{
+  width: 20px;
+  height: 20px;
+}
+
+.checkbox label{
+  font-size: 18px;
 }
 

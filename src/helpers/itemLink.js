@@ -33,6 +33,13 @@ export const homeLinks = [
   { path: "observe", name: "Видеоконтроль" },
 ];
 
+export const typeTitle = [
+  { id: "internet", name: "интернета" },
+  { id: "tv", name: "телевидения" },
+  { id: "phone", name: "телефона" },
+  { id: "hosting", name: "хостинга" },
+];
+
 export const serviceLinks = [
   { path: "operation", name: "Выбор операции" },
   { path: "date", name: "Дата и время" },
