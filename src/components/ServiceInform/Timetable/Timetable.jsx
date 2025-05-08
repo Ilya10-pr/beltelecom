@@ -12,10 +12,6 @@ import {  getAllRecords } from '../../../api/api';
 import { staticTimes } from '../../../helpers/itemLink';
 
 
-// const allTimeSlots = [
-//   {date: "2025-05-10", times: ["10:00", "12:00", "13: 00"]},
-//   {date: "2025-05-09", times: ["09:00", "11:00", "14: 00"]},
-// ]
 
 const Timetable = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -58,7 +54,7 @@ const Timetable = () => {
     const bookedDate = blockedData?.find(booked => 
       isSameDay(parseISO(booked.date), date)
     );
-    const lengthTimes = allTimeSlots.filter(d => d.date === date.toLocaleDateString('en-CA')).times?.length && staticTimes.length
+    const lengthTimes = allTimeSlots?.filter(d => d.date === date.toLocaleDateString('en-CA')).times?.length && staticTimes.length
     return bookedDate && bookedDate.time.length === lengthTimes;
   };
 
@@ -70,7 +66,7 @@ const Timetable = () => {
     );
 
 
-    const isTimes = allTimeSlots.filter(d => d.date === selectedDate.toLocaleDateString('en-CA') ).flatMap(item => item.times)
+    const isTimes = allTimeSlots?.filter(d => d.date === selectedDate.toLocaleDateString('en-CA') ).flatMap(item => item.times)
     const times = isTimes.length !== 0 ? isTimes : staticTimes
     return bookedDate 
       ? times.filter(time => !bookedDate.time.includes(time))
@@ -131,7 +127,7 @@ const Timetable = () => {
         <div className={style.timeSlots}>
           <h3>Доступное время на {selectedDate.toLocaleDateString()}</h3>
           <div className={style.timeButtons}>
-            {getAvailableTimes().map(time => (
+            {getAvailableTimes()?.map(time => (
               <button
                 key={time}
                 className={`${style.timeBtn} ${selectedTime === time ? 'active' : ''}`}
