@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { DayPicker } from "react-day-picker";
 import style from "./EditTime.module.css"
 import 'react-day-picker/dist/style.css';
@@ -17,6 +17,17 @@ const EditTime = () => {
   const twoMonthsFromNow = addMonths(new Date(), 2);
 
 
+
+  const setDate = (d) => {
+    setSelectedDate(d)
+    const data = JSON.parse(window.localStorage.getItem("times"))
+    if(!data) {
+      return
+    }
+    const isTimes = data.filter(f => f.date === d.toLocaleDateString('en-CA') ).flatMap(item => item.times)
+    setBlockedTime(isTimes)
+
+  }
   const addCustomTime = () => {
     if (customTime && !blockedTime.includes(customTime)) {
       setBlockedTime([...blockedTime, customTime]);
@@ -71,7 +82,7 @@ const EditTime = () => {
         locale={ru}
         mode="single"
         selected={selectedDate}
-        onSelect={setSelectedDate}
+        onSelect={(d) => setDate(d)}
         modifiersStyles={modifiersStyles}
         disabled={[
           { before: new Date() },
