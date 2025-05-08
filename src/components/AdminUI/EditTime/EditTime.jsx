@@ -7,11 +7,12 @@ import { ru } from 'date-fns/locale';
 import toast from 'react-hot-toast';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
+import { staticTimes } from '../../../helpers/itemLink';
 
 
 const EditTime = () => {
   const [selectedDate, setSelectedDate] = useState(null);
-  const [blockedTime, setBlockedTime] = useState([]);
+  const [blockedTime, setBlockedTime] = useState(staticTimes);
   const [customTime, setCustomTime] = useState('12:00'); 
 
   const twoMonthsFromNow = addMonths(new Date(), 2);
@@ -25,8 +26,11 @@ const EditTime = () => {
       return
     }
     const isTimes = data.filter(f => f.date === d.toLocaleDateString('en-CA') ).flatMap(item => item.times)
+    if(isTimes.length === 0){
+      setBlockedTime(staticTimes)
+      return
+    }
     setBlockedTime(isTimes)
-
   }
   const addCustomTime = () => {
     if (customTime && !blockedTime.includes(customTime)) {

@@ -131,6 +131,9 @@
     color: #0779BF;
     padding: 10px;
   }
+  .searchBtn {
+    margin: 15px;
+  }
   .searchBtn button{
     font-size: 16px;
       width: fit-content;

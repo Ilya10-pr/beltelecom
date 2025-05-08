@@ -9,7 +9,7 @@ const LayoutTop = () => {
   const IP = true
 
   const logOut = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
     navigate("/login");
   }
   return (
