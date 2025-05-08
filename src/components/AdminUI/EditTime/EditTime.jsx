@@ -4,39 +4,49 @@ import style from "./EditTime.module.css"
 import 'react-day-picker/dist/style.css';
 import { addMonths} from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { createRecords } from '../../../api/api';
-import { allTimeSlots } from '../../../helpers/itemLink';
 import toast from 'react-hot-toast';
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
 
 
 const EditTime = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [blockedTime, setBlockedTime] = useState([]);
+  const [customTime, setCustomTime] = useState('12:00'); 
 
   const twoMonthsFromNow = addMonths(new Date(), 2);
-  
-  const editDateAndTime = (time) => {
+
+
+  const addCustomTime = () => {
+    if (customTime && !blockedTime.includes(customTime)) {
+      setBlockedTime([...blockedTime, customTime]);
+    }
+  };
+
+  const delteTime = (time) => {
     setBlockedTime(prev =>
       prev.includes(time)
-        ? prev.filter(t => t !== time) 
-        : [...prev, time] 
+        ? prev.filter(t => t !== time)
+        : [...prev, time]
     );
-  }
+  };
 
   const handleBooking = async () => {
     try {
-      const data = blockedTime.map((time) => {
-        return {date: selectedDate.toLocaleDateString("en-CA"), time: time}
-      });
-      const response = await createRecords(data)
-      if(!response){
-        toast.error("Ошибка, попробуйте позже...")
+      if(!window.localStorage.getItem("times")) {
+        const data = [{date: selectedDate.toLocaleDateString("en-CA"), times: blockedTime}]
+        window.localStorage.setItem("times", JSON.stringify(data))
+        toast.success("Успешно")
         return
       }
-      toast.success("Успешно!")
+      const data = JSON.parse(window.localStorage.getItem("times"))
+      const newData = [...data, {date: selectedDate.toLocaleDateString("en-CA"), times: blockedTime}]
+      window.localStorage.setItem("times", JSON.stringify(newData))
+      toast.success("Успешно")
       
     } catch (error) {
       console.log(error)
+      toast.error("Ошибка, попробуйте позже...")
     }
 
   };
@@ -71,22 +81,49 @@ const EditTime = () => {
       />
 
       {selectedDate && (
-        <div className={style.timeSlots}>
-          <h3>Выберите доступное время на {selectedDate.toLocaleDateString()}</h3>
-          <div className={style.timeButtons}>
-            {allTimeSlots.map(time => (
-              <>
-                <input
-                type="checkbox"
-                id={`time-${time}`}
-                className={style.checkbox}
-                checked={blockedTime.includes(time)}
-                onChange={() => editDateAndTime(time)}
-              />
-              <label htmlFor={`time-${time}`} className={style.timeLabel}>
-                {time}
-              </label>
-              </>
+        <div className={style.timeSection}>
+          <h3>Выбранная дата: {selectedDate.toLocaleDateString()}</h3>
+          
+          <div className={style.timeInputContainer}>
+          <TimePicker
+            onChange={setCustomTime}
+            value={customTime}
+            format="HH:mm" // 24-часовой формат
+            clearIcon={null} // Убираем кнопку очистки
+            className={style.timeInput}
+            disableClock={true}
+
+          />
+            {/* <input
+              type="time"
+              step="3600" // Шаг в 1 час (3600 секунд)
+              pattern="[0-9]{2}:[0-9]{2}" // Паттерн для 24-часового формата
+              value={customTime}
+              onChange={handleTimeChange}
+              className={style.timeInput}
+            /> */}
+            <button 
+              onClick={addCustomTime}
+              className={style.addButton}
+              disabled={!customTime}
+            >
+              Добавить время
+            </button>
+          </div>
+
+          <div className={style.timeList}>
+            {blockedTime.map((time, index) => (
+              <div key={index} className={style.timeItem}>
+                <label htmlFor={`time-${index}`} className={style.timeLabel}>
+                  {time}
+                </label>
+                <button 
+                  onClick={() => delteTime(time)}
+                  className={style.removeButton}
+                >
+                  ×
+                </button>
+              </div>
             ))}
           </div>
         </div>

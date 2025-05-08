@@ -9,8 +9,13 @@ import { setDate } from '../../../store/service/service';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {  getAllRecords } from '../../../api/api';
-import { allTimeSlots } from '../../../helpers/itemLink';
+import { staticTimes } from '../../../helpers/itemLink';
 
+
+// const allTimeSlots = [
+//   {date: "2025-05-10", times: ["10:00", "12:00", "13: 00"]},
+//   {date: "2025-05-09", times: ["09:00", "11:00", "14: 00"]},
+// ]
 
 const Timetable = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -21,7 +26,8 @@ const Timetable = () => {
   const navigate = useNavigate()
   const dataClient = useSelector((state) => state.ticket);
   const {data } = useQuery({queryKey: ["record"], queryFn:() => getAllRecords() })
-
+  const allTimeSlots = JSON.parse(window.localStorage.getItem("times"))
+  console.log(allTimeSlots)
   useEffect(() => {
     if(data){
       const result = data.reduce((acc, current) => {
@@ -52,7 +58,8 @@ const Timetable = () => {
     const bookedDate = blockedData?.find(booked => 
       isSameDay(parseISO(booked.date), date)
     );
-    return bookedDate && bookedDate.time.length === allTimeSlots.length;
+    const lengthTimes = allTimeSlots.filter(d => d.date === date.toLocaleDateString('en-CA')).times?.length && staticTimes.length
+    return bookedDate && bookedDate.time.length === lengthTimes;
   };
 
   const getAvailableTimes = () => {
@@ -61,10 +68,13 @@ const Timetable = () => {
     const bookedDate = blockedData?.find(booked => 
       isSameDay(parseISO(booked.date), selectedDate)
     );
-    
+
+
+    const isTimes = allTimeSlots.filter(d => d.date === selectedDate.toLocaleDateString('en-CA') ).flatMap(item => item.times)
+    const times = isTimes.length !== 0 ? isTimes : staticTimes
     return bookedDate 
-      ? allTimeSlots.filter(time => !bookedDate.time.includes(time))
-      : allTimeSlots;
+      ? times.filter(time => !bookedDate.time.includes(time))
+      : times
   };
 
   const handleBooking = () => {
