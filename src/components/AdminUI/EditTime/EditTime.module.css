@@ -7,7 +7,59 @@
   flex-direction: column;
   justify-content: center;
 }
+.timeSection {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
 
+.timeInputContainer {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.timeInput {
+
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.addButton {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.timeList {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.timeItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.timeCheckbox {
+  transform: scale(1.2);
+}
 .dayPicker{
   display: flex;
   justify-content: center;

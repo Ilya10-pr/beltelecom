@@ -65,9 +65,9 @@ export const categories = [
   "Свидетельство",
   "Другое"
 ];
-export const allTimeSlots = [
-  '09:00', '10:00', '11:00', '12:00', 
-  '13:00', '14:00', '15:00', '16:00', '17:00'
+export const staticTimes = [
+  '09:30', '10:30', '11:30', '12:30', 
+  '13:30', '14:30', '15:00', '16:30', '17:30'
 ];
 
 export const servicesBtn = [
