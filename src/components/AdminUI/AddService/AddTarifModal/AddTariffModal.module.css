@@ -179,3 +179,9 @@
   background-color: #cccccc;
   cursor: not-allowed;
 }
+
+@media (max-width: 600px) {
+  .modalContent {
+    margin: 10px;
+  }
+}

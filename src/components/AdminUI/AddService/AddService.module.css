@@ -1,20 +1,24 @@
 .add, .delete{
-  padding: 30px 5px 5px 5px;
   text-align: left;
   max-width: 520px;
+  font-weight: 600;
   margin: 0 auto;
 }
-.add p, .delete p {
+.add .add p, .delete .delete p {
   display: inline;
-  font-weight: 600;
+  margin-bottom: 15px;
 }
 
 .wrapperBtn {
   display: flex;
   flex-direction: column;
   max-width: 500px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 30px 5px 5px 5px;
   align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 500px) {
+  .add, .delete{
+    margin: 15px;
+  }
 }
