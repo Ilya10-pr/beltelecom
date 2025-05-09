@@ -125,7 +125,7 @@ const OperationsClient = () => {
             <thead>
               <tr>
                 <th>Тип документа</th>
-                <th>Ксерокопия документа</th>
+                <th>Ксерокопия</th>
                 <th>Номер приложения</th>
                 <th>Описание</th>
                 <th>Адрес</th>
@@ -135,12 +135,12 @@ const OperationsClient = () => {
             <tbody>
                 {foundClient.document.map((document) => (
               <tr key={document.id}>
-                <td>{document.documentType}</td>
-                <td>{document.documentFile.slice(0,9) + "." + document.documentFile.split('.').pop()}</td>
-                <td>{document.id.match(/\d+/g).join("").slice(0, 7)}</td>
-                <td>{document.description}</td>
-                <td>{dataAdress}</td>
-                <td>{document.date}</td>
+                <td data-label="Тип документа">{document.documentType}</td>
+                <td data-label="Ксерокопия">{document.documentFile.slice(0,9) + "." + document.documentFile.split('.').pop()}</td>
+                <td data-label="Номер приложения">{document.id.match(/\d+/g).join("").slice(0, 7)}</td>
+                <td data-label="Описание">{document.description}</td>
+                <td data-label="Адресс">{dataAdress}</td>
+                <td data-label="Дата">{document.date}</td>
               </tr>
                 ))}
             </tbody>

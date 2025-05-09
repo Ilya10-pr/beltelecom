@@ -1,7 +1,6 @@
 .wrapperOperations {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 30px 5px 5px 5px;
 }
 .wrapperOperations .add {
   padding: 8px 16px;
@@ -76,4 +75,95 @@
   margin-top: 50px;
   font-size: 32px;
   font-weight: 600;
+}
+
+@media (max-width: 1450px) {
+  .wrapperOperations {
+  max-width: 1100px;
+}
+}
+
+@media (max-width: 1100px) {
+  .inform {
+  max-width: 800px;
+}
+.wrapperOperations {
+  max-width: 800px;
+}
+
+}
+
+@media (max-width: 830px) {
+  .wrapperOperations {
+  max-width: 600px;
+}
+  .inform {
+  max-width: 600px;
+  }
+  .inform {
+  display: flex;
+  flex-direction: column;
+  }
+  .item {
+  display: flex;
+  flex-direction: column;
+  }
+  .item input{
+  width: 60%;
+  }
+}
+
+@media (max-width: 1100px) {
+  .table, .table thead, .table tbody, 
+  .table tr, .table th, .table td {
+    display: block;
+    border: none;
+    font-size: 18px;
+    background-color: transparent;
+  }
+  .table {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  
+  .table thead {
+    display: none; /* Скрываем стандартные заголовки */
+  }
+  
+  .table tr {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    white-space: wrap;
+    background-color: #EBEBEB;
+  }
+  
+  .table td {
+    padding: 8px 8px 8px 50%;
+    text-align: right;
+    position: relative;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .table td::before {
+    /* Добавляем псевдо-заголовки */
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    font-weight: bold;
+    text-align: left;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .inform {
+  max-width: 370px;
+  }
+  .item input{
+  width: 90%;
+  }
 }

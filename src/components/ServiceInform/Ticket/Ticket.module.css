@@ -22,10 +22,19 @@
   margin-bottom: 15px;
   font-size: 32px;
 }
-.item span{
+.item span:first-child{
   font-size: 20px;
+  font-weight: bold;
 }
 button{
   padding: 10px;
   background-color: #33B4EE;
 }
+
+@media (max-width: 500px) {
+  .item {
+  display: flex;
+  flex-direction: column;
+}
+}
+

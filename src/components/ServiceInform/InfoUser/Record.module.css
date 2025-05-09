@@ -86,3 +86,17 @@ form{
   font-size: 18px;
 }
 
+@media (max-width: 600px) {
+  .item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  gap: 15px;
+  }
+  .item input {
+    width: 80%;
+    height: 20px;
+  }
+}
+

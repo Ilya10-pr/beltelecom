@@ -26,7 +26,6 @@
 form {
   margin: 0 auto;
   max-width: 700px;
-  padding: 10px;
 }
 
 
@@ -125,4 +124,29 @@ form {
 .message {
   color: #f44336;
   font-size: 12px;
+}
+
+@media (max-width: 740px) {
+  .item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  }
+}
+
+@media (max-width: 530px) {
+  .item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  }
+
+  .item input[type="text"],
+.item input[type="date"],
+.item input[type="file"],
+.item textarea {
+  width: 100%;
+}
 }

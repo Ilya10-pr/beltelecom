@@ -131,3 +131,10 @@
   border: none;
   cursor: pointer;
 }
+
+
+@media (max-width: 600px) {
+  .modal-content {
+    margin: 10px;
+  }
+}

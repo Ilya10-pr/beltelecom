@@ -4,7 +4,6 @@
   max-width: 860px;
   width: 100%;
   margin: 0 auto;
-  padding: 10px;
 }
 .operation div {
   margin-bottom: 20px;
@@ -28,4 +27,39 @@
   border: none;
   font-weight: 400;
   font-size: 24px;
+}
+
+@media (max-width: 900px) {
+  .operation {
+    max-width: 500px;
+  }
+
+  .operation button{
+    margin-bottom: 20px;
+    background-color: #33B4EE;
+    color: #fff;
+    border: none;
+  }
+}
+
+
+@media (max-width: 500px) {
+  .operation {
+    max-width: 320px;
+  }
+
+  .operation button{
+    margin-bottom: 20px;
+    background-color: #33B4EE;
+    color: #fff;
+    border: none;
+    padding: 0px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 350px) {
+  .operation {
+    max-width: 280px;
+  }
 }
