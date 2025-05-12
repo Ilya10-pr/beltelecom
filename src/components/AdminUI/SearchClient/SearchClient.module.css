@@ -17,8 +17,10 @@
   background-color: #D9D9D9;
 }
 .title{
-  margin-bottom: 35px;
   font-weight: 600;
+  font-size: 32px;
+  margin-bottom: 15px;
+
 }
 .item {
   margin-bottom: 30px;

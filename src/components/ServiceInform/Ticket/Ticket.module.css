@@ -10,6 +10,9 @@
   height: 100%;
   background-color: #E1E1E1;
 }
+.text{
+  font-size: 18px;
+}
 .item {
   display: flex;
   justify-content: space-between;
