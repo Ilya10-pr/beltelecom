@@ -81,7 +81,7 @@ const EditTime = () => {
 
   return (
     <div className={style.bookingContainer}>
-      <h2>Выберите дату и время для редактирования</h2>
+      <div className={style.title}>Выберите дату и время для редактирования</div>
       <DayPicker
         locale={ru}
         mode="single"

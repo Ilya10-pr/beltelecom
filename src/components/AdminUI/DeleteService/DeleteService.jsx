@@ -11,7 +11,7 @@ const DeleteService = () => {
 
   return (
     <div className={style.delete}>
-      <p>Выберите услугу</p>
+      <div className={style.title}>Выберите услугу</div>
       <div className={style.wrapperBtn}>
         {servicesBtn.map((btn) => (
           <>

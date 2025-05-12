@@ -9,6 +9,12 @@
   margin-bottom: 15px;
 }
 
+.title {
+  font-weight: 600;
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
 .wrapperBtn {
   display: flex;
   flex-direction: column;

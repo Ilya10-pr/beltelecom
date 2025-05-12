@@ -11,15 +11,15 @@ const Ticket = ({data, isButton = false, deleteBooked}) => {
             <div className={style.title}>Талон №{record.ticket}</div>
               <div className={style.item}>
                 <span>Выбранная услуга</span>
-                <span>{record.service}</span>
+                <span className={style.text}>{record.service}</span>
               </div>
               <div className={style.item}>
                 <span>Время приема</span>
-                <span>{record.date} {record.time}</span>
+                <span className={style.text}>{record.date} {record.time}</span>
               </div>
               <div className={style.item}>
                 <span>Тип операции</span>
-                <span>{record.action}</span>
+                <span className={style.text}>{record.action}</span>
               </div>
               <div>
                 <span>{`${data.surname} ${data.name} ${data.patronymic}`}</span>

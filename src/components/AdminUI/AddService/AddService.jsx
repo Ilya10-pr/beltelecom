@@ -9,7 +9,7 @@ const AddService = () => {
 
   return (
     <div className={style.add}>
-      <p>Выберите услугу</p>
+      <div className={style.title}>Выберите услугу</div>
       <div className={style.wrapperBtn}>
         {servicesBtn.map((btn) => (
           <>

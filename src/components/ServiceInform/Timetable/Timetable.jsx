@@ -104,7 +104,7 @@ const Timetable = () => {
         <div>Услуга: {dataClient.service}</div>
         <div>Операция: {dataClient.action}</div>
       </div>
-      <h2>Выберите дату и время</h2>
+      <div className={style.title}>Выберите дату и время</div>
       <DayPicker
         locale={ru}
         mode="single"
