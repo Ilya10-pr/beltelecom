@@ -1,7 +1,6 @@
 import React from 'react'
 import style from "./Packages.module.css"
 import {  useNavigate } from 'react-router-dom';
-import PopupChannels from './PopupChannels/PopupChannels';
 import { useDispatch } from 'react-redux';
 import { setServiceId } from '../../store/service/service';
 
@@ -26,7 +25,6 @@ const Packages = ({name, price, description, id, path}) => {
                       ))
                        : <div className={style.item}>{description}</div> }
           
-          <PopupChannels />
         </div>
         <div className={style.price}>
             {price} р./мес. 
