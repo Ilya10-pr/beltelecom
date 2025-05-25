@@ -59,20 +59,28 @@ const Timetable = () => {
     return bookedDate && bookedDate.time.length === lengthTimes;
   };
 
-  const getAvailableTimes = () => {
-    if (!selectedDate) return [];
-    
-    const bookedDate = blockedData?.find(booked => 
-      isSameDay(parseISO(booked.date), selectedDate)
-    );
 
+  const getAvailableTimes = () => {
+  if (!selectedDate) return [];
+
+  const bookedDate = blockedData?.find(booked => 
+    isSameDay(parseISO(booked.date), selectedDate)
+  );
 
   const isTimes = allTimeSlots?.filter(d => d.date === selectedDate.toLocaleDateString('en-CA'))?.flatMap(item => item.times) || [];
-    const times = isTimes.length !== 0 ? isTimes : staticTimes
-    return bookedDate 
-      ? times.filter(time => !bookedDate.time.includes(time + ":00"))
-      : times
-  };
+  const times = isTimes.length !== 0 ? isTimes : staticTimes;
+
+  const availableTimes = bookedDate 
+    ? times.filter(time => !bookedDate.time.includes(time + ":00"))
+    : times;
+
+  // ✅ Сортировка по времени
+  return availableTimes.sort((a, b) => {
+    const [h1, m1] = a.split(':').map(Number);
+    const [h2, m2] = b.split(':').map(Number);
+    return h1 - h2 || m1 - m2;
+  });
+};
 
   const handleBooking = () => {
     if (!selectedDate || !selectedTime) return;

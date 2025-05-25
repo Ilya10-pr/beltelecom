@@ -16,7 +16,7 @@ const Ticket = ({data, isButton = false, deleteBooked}) => {
               </div>
               <div className={style.item}>
                 <span>Время приема</span>
-                <span className={style.text}>{record.date.slice(0, 10)} {dataClient.time}</span>
+                <span className={style.text}>{record.date.slice(0, 10)} {record.time.slice(0,4)}</span>
               </div>
               <div className={style.item}>
                 <span>Тип операции</span>
