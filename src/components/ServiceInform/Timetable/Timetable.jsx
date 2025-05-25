@@ -42,6 +42,8 @@ const Timetable = () => {
         
         return acc;
       }, []);
+
+      console.log(result)
       setBlockedData(result)
     } else {
       setBlockedData([])
@@ -68,7 +70,7 @@ const Timetable = () => {
   const isTimes = allTimeSlots?.filter(d => d.date === selectedDate.toLocaleDateString('en-CA'))?.flatMap(item => item.times) || [];
     const times = isTimes.length !== 0 ? isTimes : staticTimes
     return bookedDate 
-      ? times.filter(time => !bookedDate.time.includes(time))
+      ? times.filter(time => !bookedDate.time.includes(time + ":00"))
       : times
   };
 
