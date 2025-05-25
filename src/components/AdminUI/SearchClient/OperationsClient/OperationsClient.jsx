@@ -140,7 +140,7 @@ const OperationsClient = () => {
                 <td data-label="Номер приложения">{document.id.match(/\d+/g).join("").slice(0, 7)}</td>
                 <td data-label="Описание">{document.description}</td>
                 <td data-label="Адресс">{dataAdress}</td>
-                <td data-label="Дата">{document.date}</td>
+                <td data-label="Дата">{document.date.slice(0, 10)}</td>
               </tr>
                 ))}
             </tbody>

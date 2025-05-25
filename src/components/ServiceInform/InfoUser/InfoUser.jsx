@@ -29,7 +29,7 @@ const Record = () => {
       } 
       toast.success("Забронированно!")
       navigate(`/service/ticket/${response.id}`)
-      dispatch(resetTicket())
+      // dispatch(resetTicket())
     } catch (error) {
       console.log(error)
     }
