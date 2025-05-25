@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from  './AddTariffModal.module.css';
 import { createPackage, createService, getAllServices } from '../../../../api/api';
 import { useQuery } from '@tanstack/react-query';
@@ -172,7 +172,7 @@ const AddTariffModal = ({serviceId, setIsModalOpen}) => {
                   
                   {showServiceTypes && (
                     <div className={style.servicesDropdown}>
-                      {data.filter(item => item.packageId === null).map(service => (
+                      {data.filter(item => item.category !== null).map(service => (
                         <button
                           key={service.id}
                           type="button"

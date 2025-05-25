@@ -23,7 +23,6 @@ const Timetable = () => {
   const dataClient = useSelector((state) => state.ticket);
   const {data } = useQuery({queryKey: ["record"], queryFn:() => getAllRecords() })
   const allTimeSlots = JSON.parse(window.localStorage.getItem("times"))
-  console.log(allTimeSlots)
   useEffect(() => {
     if(data){
       const result = data.reduce((acc, current) => {
@@ -66,7 +65,7 @@ const Timetable = () => {
     );
 
 
-    const isTimes = allTimeSlots?.filter(d => d.date === selectedDate.toLocaleDateString('en-CA') ).flatMap(item => item.times)
+  const isTimes = allTimeSlots?.filter(d => d.date === selectedDate.toLocaleDateString('en-CA'))?.flatMap(item => item.times) || [];
     const times = isTimes.length !== 0 ? isTimes : staticTimes
     return bookedDate 
       ? times.filter(time => !bookedDate.time.includes(time))
