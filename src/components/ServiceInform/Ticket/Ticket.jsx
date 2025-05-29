@@ -6,13 +6,12 @@ import { useSelector } from 'react-redux';
 const Ticket = ({data, isButton = false, deleteBooked}) => {
 
   const record = data.record[0]
-  const dataClient = useSelector((state) => state.ticket);
   return (
           <div className={style.innerTicket}>
             <div className={style.title}>Талон №{record.ticket}</div>
               <div className={style.item}>
                 <span>Выбранная услуга</span>
-                <span className={style.text}>{dataClient.service}</span>
+                <span className={style.text}>{record.service}</span>
               </div>
               <div className={style.item}>
                 <span>Время приема</span>
