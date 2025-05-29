@@ -26,14 +26,11 @@ const Timetable = () => {
   useEffect(() => {
     if(data){
       const result = data.reduce((acc, current) => {
-        // Ищем есть ли уже запись с такой датой
         const existingDate = acc.find(item => item.date === current.date);
         
         if (existingDate) {
-          // Если дата уже есть - добавляем время в массив
           existingDate.time.push(current.time);
         } else {
-          // Если даты нет - создаем новую запись
           acc.push({
             date: current.date,
             time: [current.time]
