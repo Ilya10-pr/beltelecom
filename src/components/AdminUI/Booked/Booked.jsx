@@ -32,7 +32,7 @@ const Booked = () => {
   return (
     <div className={style.wrapperBooked}>
       {records.map((client) => (
-        <Ticket data={client} isButton={true} deleteBooked={deleteBooked}/>
+        <Ticket data={false} allTickets={client} isButton={true} deleteBooked={deleteBooked}/>
       ))}
       </div>
   )

@@ -23,6 +23,7 @@ const Record = () => {
       const newData = {...dataClient, infoUser}
       reset();
       const response = await createClient(newData)
+      
       if(!response){
         toast.error("Ошибка бронирования, попробуйте позже...")
         return

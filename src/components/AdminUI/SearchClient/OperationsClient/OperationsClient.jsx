@@ -24,7 +24,7 @@ const OperationsClient = () => {
     });
     const navigate= useNavigate()
     const foundClient = useSelector((state) => state.client.foundClient)
-    const dataAdress = `ул. ${foundClient?.adress[0].street}, д. ${foundClient?.adress[0].house}, кв. ${foundClient?.adress[0].flat}`
+    const dataAdress = `ул. ${foundClient?.adress[0]?.street}, д. ${foundClient?.adress[0]?.house}, кв. ${foundClient?.adress[0]?.flat}`
     useEffect(() => {
         setUserData(foundClient);
         setFormData({

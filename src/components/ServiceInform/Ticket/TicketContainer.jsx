@@ -15,7 +15,7 @@ const TicketContainer = () => {
 
   return (
     <div className={style.wrapperTicket}>
-      <Ticket data={data}/>
+      <Ticket data={data} allTickts={false}/>
     </div>
   )
 };
