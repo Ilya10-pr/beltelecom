@@ -24,6 +24,9 @@ export const ticketSlice = createSlice({
       state.date = action.payload.date
       state.time = action.payload.time
     },
+    setInfoUser: (state, action) => {
+      state.infoUser = action.payload
+    },
     resetTicket: () => initialState
   },
 })

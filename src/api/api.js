@@ -58,7 +58,7 @@ export const getClientByName =  (data) => {
 
 
 export const deleteBookedFromList =  (id) => {
-  return  instance.delete(`client/${id}`).then((res) => res.data)
+  return  instance.delete(`record/${id}`).then((res) => res.data)
 }
 
 

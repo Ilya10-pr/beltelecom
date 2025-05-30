@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import style from "./Record.module.css"
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {  resetTicket } from '../../../store/service/service';
+import {  resetTicket, setInfoUser } from '../../../store/service/service';
 import { createClient } from '../../../api/api';
 import toast from 'react-hot-toast';
 const Record = () => {
@@ -28,6 +28,7 @@ const Record = () => {
         toast.error("Ошибка бронирования, попробуйте позже...")
         return
       } 
+      dispatch(setInfoUser(infoUser))
       toast.success("Забронированно!")
       navigate(`/service/ticket/${response.id}`)
       // dispatch(resetTicket())
